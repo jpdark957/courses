@@ -1,0 +1,196 @@
+<template>
+  <div class="courseIntroduce">
+    <div class="courseName">
+      <span>{{cName}}</span>
+      <span>{{eCourse}}</span>
+    </div>
+    <div class="courseTab">
+      <ul>
+        <li
+          v-for="(item, index) in HomeTabAContent"
+          :key="index"
+          class="tabItem"
+          @mouseenter="tabMove(index)"
+          :class="{isActive: active === index}"
+        >{{item.homeLabel}}</li>
+      </ul>
+    </div>
+
+    <div class="courseContent">
+      <div v-show="isShow(index2)" v-for="(item,index2) in HomeTabAContent" :key="index2" class="cDiv">
+        <!-- {{item}} -->
+        <div class="imgDiv">
+          <img :src="'http://localhost:8888/linux'+item.labelImg" />
+        </div>
+        <div class="textDiv">
+          <ul>
+            <li v-for="item2 in item.list" :key="item2">{{item2}}</li>
+          </ul>
+         
+        </div>
+         <div class="btn">
+           <button>了解更多</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      active: 0,
+      cName: "Linux",
+      eCourse: "精品课程",
+    };
+  },
+  props: {
+    HomeTabAContent: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  },
+  computed: {
+
+  },
+  methods: {
+    tabMove(index) {
+      this.active = index;
+    },
+    isShow(index2) {
+      if (index2 === this.active) return true;
+    }
+  },
+};
+</script>
+
+<style scoped>
+.isActive {
+  background-color: var(--color-main);
+  color: #fff;
+}
+.courseName {
+  width: 100%;
+  height: 100px;
+  margin: 0px auto 0 auto;
+  text-align: center;
+}
+.courseName span {
+  font-size: 28px;
+  margin: 0px 0 0 10px;
+  line-height: 100px;
+}
+.courseName span:first-child {
+  font-weight: bolder;
+  color: var(--color-main);
+}
+
+.courseTab {
+  width: 100%;
+  height: 52px;
+  text-align: center;
+}
+.courseTab ul {
+  width: 75%;
+  height: 92%;
+  margin: 0 auto 0 auto;
+  list-style: none;
+  line-height: 50px;
+  border: 2px solid var(--color-main);
+  background-color: #f0f0f0;
+}
+.courseTab li {
+  margin-left: 0.8%;
+  width: 24%;
+  height: 100%;
+  font-size: 16px;
+  border-left: 0.1px solid var(--color-main);
+  border-right: 0.1px solid var(--color-main);
+  float: left;
+}
+.courseTab li:hover {
+  background-color: var(--color-main);
+  transition: 0.3s;
+  color: #fff;
+  border-right: 0.1px solid var(--color-main);
+}
+
+.courseContent {
+  width: 80%;
+  height: 400px;
+  background-color:#fbfbfb;
+  /* background-color: #fff; */
+
+  margin: 2% auto 0 auto;
+  border: 1px solid #e7e7e7;
+}
+.courseContent>div {
+  width: 98%;
+  height: 96%;
+  margin: auto;
+  margin-top: .8%;
+  background-color: #fff;
+}
+.courseContent .imgDiv {
+  width: 36%;
+  height: 100%;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 5%;
+  float: left;
+}
+.courseContent img {
+  width: 100%;
+  height: 70%;
+  box-shadow: 0 0 10px grey;
+}
+
+.courseContent .textDiv {
+  width: 58%;
+  height: 63%;
+  margin-left: 2%;
+  margin-top: 5%;
+  float: left;
+  color: grey;
+  font-size: 14px;
+  overflow: auto;
+  margin-left: -.1%;
+}
+.textDiv::-webkit-scrollbar {
+  display:none;
+}
+.textDiv ul {
+  width: 100%;
+  height: 100%;
+  list-style-position:inside;
+
+}
+
+.textDiv ul li {
+  margin-top: 2%;
+}
+
+
+.btn {
+  width: 58%;
+  height: 20%;
+  float: left;
+}
+.btn button {
+  width: 20%;
+  height: 40%;
+  float: right;
+  background-color: #8194b4;
+  outline: none;
+  border-radius: 7px 7px ;
+}
+.btn button:hover {
+  background-color: var(--color-main);
+  color: #fff;
+  transition: .3s;
+  
+}
+</style>
