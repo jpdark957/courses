@@ -20,7 +20,7 @@
       <div v-show="isShow(index2)" v-for="(item,index2) in HomeTabAContent" :key="index2" class="cDiv">
         <!-- {{item}} -->
         <div class="imgDiv">
-          <img :src="'http://localhost:8888/linux'+item.labelImg" />
+          <img :src="ImgRoute+item.labelImg" />
         </div>
         <div class="textDiv">
           <ul>
@@ -43,6 +43,7 @@ export default {
       active: 0,
       cName: "Linux",
       eCourse: "精品课程",
+      ImgRoute: this.overall.ImgRoute
     };
   },
   props: {
