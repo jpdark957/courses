@@ -20,7 +20,7 @@
       <div v-show="isShow(index2)" v-for="(item,index2) in HomeTabAContent" :key="index2" class="cDiv">
         <!-- {{item}} -->
         <div class="imgDiv">
-          <img :src="ImgRoute+item.labelImg" />
+          <img :src="RouteContext+item.labelImg" />
         </div>
         <div class="textDiv">
           <ul>
@@ -37,13 +37,14 @@
 </template>
 
 <script>
+import {RouteContext} from 'common/const.js'
 export default {
   data() {
     return {
       active: 0,
       cName: "Linux",
       eCourse: "精品课程",
-      ImgRoute: this.overall.ImgRoute
+      RouteContext
     };
   },
   props: {
@@ -55,7 +56,6 @@ export default {
     }
   },
   computed: {
-
   },
   methods: {
     tabMove(index) {
