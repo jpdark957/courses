@@ -20,7 +20,7 @@
         </ul>
       </nav-main>
 
-      <nav-main>
+      <nav-main path="/afterTalk">
         <ul>
           <li>课后谈论</li>
         </ul>
