@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 const Home = () => import('@/views/home/Home')
 const TeachVideo = () => import('@/views/teachVideo/TeachVideo')
+const VideoDetail = () => import('@/views/teachVideo/childComps/VideoDetail')
 const AfterTalk = () => import('@/views/afterTalk/AfterTalk')
 
 //安装插件
@@ -20,6 +21,10 @@ const routes = [
   {
     path: '/teachVideo',
     component: TeachVideo
+  },
+  {
+    path: '/teachVideo/:id',
+    component: VideoDetail
   },
   {
     path: '/afterTalk',

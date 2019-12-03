@@ -1,17 +1,22 @@
 <template>
   <div id="app">
     <main-tab-bar />
-    <router-view />
+    <keep-alive exclude="teachVideo">
+      <router-view />
+    </keep-alive>
+    <c-footer />
   </div>
 </template>
 
 <script>
 import MainTabBar from 'components/content/mainTabbar/MainTabBar'
+import cFooter from 'components/content/footer/Footer'
 
 export default {
   name: 'App',
   components: {
-    MainTabBar
+    MainTabBar,
+    cFooter
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="courseIntroduce">
-    <div class="courseName">
+  <content-box>
+    <div class="courseName contentTitle">
       <span>{{cName}}</span>
       <span>{{eCourse}}</span>
     </div>
@@ -33,12 +33,16 @@
           </div>
       </div>
     </div>
-  </div>
+  </content-box>
 </template>
 
 <script>
 import {RouteContext} from 'common/const.js'
+import ContentBox from 'components/content/overall/ContentBox'
 export default {
+  components: {
+    ContentBox
+  },
   data() {
     return {
       active: 0,
@@ -69,21 +73,13 @@ export default {
 </script>
 
 <style scoped>
+
+
 .isActive {
   background-color: var(--color-main);
   color: #fff;
 }
-.courseName {
-  width: 100%;
-  height: 100px;
-  margin: 0px auto 0 auto;
-  text-align: center;
-}
-.courseName span {
-  font-size: 28px;
-  margin: 0px 0 0 10px;
-  line-height: 100px;
-}
+
 .courseName span:first-child {
   font-weight: bolder;
   color: var(--color-main);
@@ -174,7 +170,7 @@ export default {
   margin-top: 2%;
 }
 
-
+/**button按钮 */
 .btn {
   width: 58%;
   height: 20%;

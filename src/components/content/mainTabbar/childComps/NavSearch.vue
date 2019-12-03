@@ -42,11 +42,15 @@ input[type="text"] {
   padding-left: 20px;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
+
 }
 
 button {
   width: 13%;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: #f0f0f0;
+
+
   border-left: 1px solid #b0b0b0;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -55,5 +59,8 @@ button img {
   width: 18px;
   height: 18px;
   margin-top: 2px;
+  cursor: pointer;
 }
+
+
 </style>

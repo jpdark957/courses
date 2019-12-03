@@ -1,15 +1,19 @@
 <template>
-  <div>
-    这里是教学视频
-  </div>
+  <video-main />
 </template>
 
 <script>
+import videoMain from './childComps/videoMain'
 export default {
-  name: 'TeachVideo'
-}
+  name: "TeachVideo",
+  components: {
+    videoMain
+  },
+  data() {
+    return {};
+  }
+};
 </script>
 
 <style scoped>
-
 </style>

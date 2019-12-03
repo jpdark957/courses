@@ -2,12 +2,16 @@
   <div class="home">
     <div class="content">
       <h-course-introduce :HomeTabAContent="HomeTabAContent"/>
+      <h-advantage />
+      <h-state-study />
     </div>
   </div>
 </template>
 
 <script>
 import HCourseIntroduce from './childComps/HCourseIntroduce'
+import HAdvantage from './childComps/HAdvantage'
+import HStateStudy from './childComps/HStateStudy'
 import { getHomeTab } from 'network/home'
 export default {
   name: 'Home',
@@ -23,7 +27,9 @@ export default {
     }
   },
   components: {
-    HCourseIntroduce
+    HCourseIntroduce,
+    HAdvantage,
+    HStateStudy
   },
   created() {
     this.getHomeTab()
@@ -31,8 +37,8 @@ export default {
   methods: {
     getHomeTab() {
       getHomeTab().then(res => {
-        console.log(res)
-        console.log(res[0])
+        // console.log(res)
+        // console.log(res[0])
         this.HomeTabAContent = res
         // this.tabs = res.homeLabel
       })
@@ -45,19 +51,12 @@ export default {
   .home {
     width: 100%;
     background-color:#f0f0f0;
-    
   }
 
   .content {
     width: 100%;
     background-color:#f0f0f0;
   }
-  .courseIntroduce {
-    width: 80%;
-    height: 620px;
-    background-color: #fff;
-    margin: 30px auto 50px auto;
-    box-shadow: 0 0 20px #e7e7e7;
-  }
+  
 
 </style>

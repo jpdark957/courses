@@ -2,12 +2,17 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// import overall1 from './components/content/overall/Overall2'//引用文件
-// import overall from './components/content/overall/Overall'//引用文件
+import ElementUI from 'element-ui'
 
-// Vue.prototype.overall = overall1//挂载到Vue实例上面
+import 'element-ui/lib/theme-chalk/index.css'
+// import BootstrapVue from 'bootstrap-vue'
+
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
+
+Vue.use(ElementUI)
 
 new Vue({
   router,

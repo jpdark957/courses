@@ -1,0 +1,214 @@
+<template>
+  <content-box>
+    <div class="stateName contentTitle">
+      <span>{{sName}}</span>
+      <span>{{state}}</span>
+      <p>{{titleP}}</p>
+    </div>
+
+    <div class="studyContent">
+      <div class="videoCon">
+        <video controls>
+          <source src="~assets/video/Linux.mp4">
+        </video>
+      </div>
+      <div class="videoList">
+        <ul class="tools">
+          <li v-for="(item,index) in toolList" :key="index">
+            <img :src="item.tImg" alt="">
+            <span>{{item.tName}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="videoList talkList">
+        <div class="talkTitle">
+          <span class="titleHeader">最新交流</span>
+          <span class="more">查看更多>></span>
+        </div>
+        <ul class="talk">
+          <li v-for="(item, index) in 3" :key="index">
+            <span class="talkNum">{{index+1}}</span>
+            <span>想的多一定没做的多有效，然而不想便做一定没什么效果。效果。效果。</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </content-box>
+</template>
+
+<script>
+import ContentBox from 'components/content/overall/ContentBox'
+export default {
+  name: 'HStateStudy',
+  data() {
+    return {
+      sName: '认识Linux',
+      state: '从这里开始',
+      titleP: '想的多一定没做的多有效，然而不想便做一定没什么效果。',
+      toolList: [
+        {
+          tImg: require('assets/img/home/mindMapping.png'),
+          tName: 'Linux学习思维导图'
+        },
+        {
+          tImg: require('assets/img/home/catalog.png'),
+          tName: 'Linux目录结构'
+        },
+        {
+          tImg: require('assets/img/home/instructions.png'),
+          tName: 'Linux常见指令'
+        },
+        {
+          tImg: require('assets/img/home/null.png'),
+          tName: '暂无'
+        }
+      ],
+
+    }
+  },
+  components: {
+    ContentBox
+  },
+}
+</script>
+
+<style scoped>
+
+.ContentBox {
+  background-color: #f0f0f0;
+  /* height: 750px; */
+  box-shadow: none;
+}
+
+.stateName span:first-child {
+  font-weight: bolder;
+  color: var(--color-main);
+}
+.stateName p {
+  font-size: 18px;
+  color: #938493;
+}
+.studyContent {
+  width: 100%;
+  height: 400px;
+  margin: 4% auto 0 5% ;
+  /* background-color: gold; */
+}
+.videoCon {
+  width: 50%;
+  float: left;
+}
+video {
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+
+.videoList {
+  width: 35%;
+  height: 45%;
+  /* background-color: 	rgba(33,68,131,.7); */
+  float: left;
+  margin-left: 5%;
+  margin-bottom: 5%;
+  border-top: 2px solid var(--color-main);
+}
+
+.videoList .tools {
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  margin: auto;
+}
+
+.tools li {
+  width: 45%;
+  height: 45%;
+  background-color: #fff;
+  border-radius: 2%;
+  margin: 2% 2% 0 2%;
+  text-align: center;
+  border: 1px solid #e7e7e7;
+  float: left;
+  cursor: pointer;
+}
+
+
+.tools li img {
+  width:22%;
+  height: 45%;
+  /* background-color: red; */
+  margin: 12% 0 0 5%;
+  float: left;
+}
+.tools li span {
+  width: 70%;
+  height: 100%;
+  float: left;
+  font-size: 16px;
+  color: var(--color-main);
+  margin-top: 15%;
+}
+
+.talkList {
+  background-color: #fff;
+}
+
+.talkTitle {
+  width: 100%;
+  height: 20%;
+
+}
+.talkList .titleHeader {
+  width: 74px;
+  font-size: 18px;
+  font-weight: bolder;
+  margin: 2% 0 0 4%;
+  float: left;
+}
+.talkList .more {
+  width: 100px;
+  float: right;
+  margin-top: 4%;
+  cursor:pointer;
+}
+.more:hover {
+  color: red;
+}
+.talkList .talk {
+  width: 90%;
+  list-style: none;
+  margin:2% 0 0 6%;
+}
+.talk li {
+  margin: 5% 0 0 0;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  cursor:pointer;
+}
+.talk li .talkNum {
+  width: 20px;
+  height: 20px;
+  display: block;
+  text-align: center;
+  color: #fff;
+  background-color: red;
+  float: left;
+  
+}
+.talk li span:last-child {
+  width: 20px;
+  margin: 0 0 0 2%;
+  font-size: 14px;
+ 
+}
+
+.tools li:hover,.talk li:hover {
+  background-color: rgba(33,68,131,.3);
+  transition: .3s;
+  color: #f0f0f0;
+}
+
+</style>

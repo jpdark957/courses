@@ -18,7 +18,7 @@ module.exports = {
     proxy: {
       // 配置跨域处理 可以设置多个
       '/api': {
-        target: 'http://localhost:8888/linux',
+        target: 'http://0.0.0.0:8888/linux',
         ws: true,
         changeOrigin: true,
         pathRewrite: {

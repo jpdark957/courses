@@ -1,48 +1,28 @@
 <template>
-  <div class="tab-bar">
+  <el-row class="tab-bar">
 
-    <div class="nav">
-      <nav-main path="/home">
-        <ul>
-          <li>首页</li>
-        </ul>
-      </nav-main>
+    <el-col :span="19" :offset="5">
 
-      <nav-main path="/teachVideo">
-        <ul>
-          <li>教学视频</li>
-        </ul>
-      </nav-main>
+      <el-col :span="2" v-for="(item, index) in navData" :key="index">
+        <nav-main :path="item.liPath">
+          <ul>
+            <li>{{item.liCon}}</li>
+          </ul>
+        </nav-main>
+      </el-col>
 
-      <nav-main>
-        <ul>
-          <li>教学资料</li>
-        </ul>
-      </nav-main>
+      <el-col :span="4" :offset="4">
+        <nav-search />
+      </el-col>
 
-      <nav-main path="/afterTalk">
-        <ul>
-          <li>课后谈论</li>
-        </ul>
-      </nav-main>
+    </el-col>
 
-      <nav-main>
-        <ul>
-          <li>教学反馈</li>
-        </ul>
-      </nav-main>
-    </div>
-
-    <div class="search">
-      <nav-search />
-    </div>
-
-  </div>
+  </el-row>
 </template>
 
 <script>
-import NavMain from "./NavMain"
-import NavSearch from "./NavSearch"
+import NavMain from "./NavMain";
+import NavSearch from "./NavSearch";
 export default {
   name: "TabBar",
   components: {
@@ -51,55 +31,54 @@ export default {
   },
   data() {
     return {
-      path: String
+      navData: [
+        {
+          liCon: "首页",
+          liPath: "/home"
+        },
+        {
+          liCon: "教学视频",
+          liPath: "/teachVideo"
+        },
+        {
+          liCon: "教学资料",
+          liPath: "/home"
+        },
+        {
+          liCon: "课后谈论",
+          liPath: "/afterTalk"
+        },
+        {
+          liCon: "教学反馈",
+          liPath: "/home"
+        }
+      ]
     };
-  },
-  methods: {}
+  }
 };
 </script>
 
 <style scoped>
 .tab-bar {
-  width: 100%;
   height: 50px;
-  background-color: var(--color-main);
-  /* background-color: #f0f0f0; */
   border-top: 3px solid #cfb872;
+  background-color: var(--color-main);
+  color: #fff;
 }
 
-.nav {
-  width: 50%;
-  height: 100%;
-  margin-left: 17%;
-  float: left;
-}
-
-.nav ul li {
-  font-size: 18px;
-  color: white;
+ul li {
+  font-size: 14px;
+  line-height: 47px;
   float: right;
   list-style: none;
   text-align: center;
-  line-height: 50px;
+  cursor: pointer;
 }
-
-.nav ul li:hover {
-  color: 	#DAA520;
+ul li:hover {
+  color: #daa520;
 }
-
 .search {
-  width: 20%;
   height: 100%;
-  margin-left: 0%;
   float: left;
 }
-
-
-
-
-
-
-
-
-
 </style>
