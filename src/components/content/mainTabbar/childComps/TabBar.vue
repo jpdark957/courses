@@ -45,12 +45,12 @@ export default {
           liPath: "/home"
         },
         {
-          liCon: "课后谈论",
-          liPath: "/afterTalk"
+          liCon: "课程讨论",
+          liPath: "/home"
         },
         {
           liCon: "教学反馈",
-          liPath: "/home"
+          liPath: "/comment"
         }
       ]
     };

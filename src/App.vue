@@ -5,6 +5,7 @@
       <router-view />
     </keep-alive>
     <c-footer />
+
   </div>
 </template>
 
@@ -21,6 +22,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   @import "assets/css/base.css";
 </style>

@@ -12,6 +12,7 @@ module.exports = {
   },
   devServer: {
     //跨域
+    disableHostCheck: true,
     open: true,
     host: 'localhost',
     https: false,
