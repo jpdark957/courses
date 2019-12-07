@@ -9,7 +9,7 @@
             />
             <div class="page"><elpagination @currentChange="currentChange" :PageInfo="PageInfo"/></div>
             <el-divider></el-divider>
-            <div class="add"><comment-add @success="success"/></div>
+            <div class="add" v-if="addshow"><comment-add @success="success"/></div>
         </el-card>
     </div>
 </template>
@@ -20,7 +20,7 @@
     import Elpagination from "../../components/common/Elpagination";
     import CommentAdd from "./commentComps/CommentAdd";
 
-    import {commentList} from "../../network/commen";
+    import {commentList,byusercommentList} from "../../network/commen";
     import {PageInfo} from "../../common/utils";
 
 
@@ -41,7 +41,7 @@
                 commentList:[],
                 loading:true,
                 PageInfo,
-
+                addshow:true
             }
         },
         created() {
@@ -62,14 +62,38 @@
                         this.loading=false
                     })
             },
+            getMyCommentList(currentPage,pageSize) {
+                byusercommentList(currentPage, pageSize).then(res => {
+                    console.log(res);
+                    if(res.code==0){
+                    this.commentList = res.data.content
+                    let currentPage=this.currentPage
+                    let pageSize=res.data.size
+                    let total = res.data.totalElements
+                    this.PageInfo=new PageInfo(currentPage,pageSize,total)
+                    this.loading=false
+                    }
+                })
+            },
             //事件处理
             handleClick(tab) {
                 console.log(tab.index);
                 this.eltabsindex = tab.index
+                if (tab.index==0){
+                    this.getCommentList(this.currentPage,this.pageSize)
+                    this.addshow=true
+                }else{
+                    this.getMyCommentList(this.currentPage,this.pageSize)
+                    this.addshow=false
+                }
             },
             currentChange(value){
                this.currentPage=value
-               this.getCommentList(this.currentPage,this.pageSize)
+                if (this.eltabsindex ==0){
+                    this.getCommentList(this.currentPage,this.pageSize)
+                }else {
+                    this.getMyCommentList(this.currentPage,this.pageSize)
+                }
             },
             success(){
                 //添加成功刷新数据

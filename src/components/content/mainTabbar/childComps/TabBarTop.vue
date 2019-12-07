@@ -67,7 +67,7 @@
 import { wRoute } from "common/mixin";
 import VideoTab from "./VideoTab";
 import Eldialog from "../../../common/Eldialog";
-import {login} from "../../../../network/login";
+import {login,logout} from "../../../../network/login";
 
 export default {
   name: "TabBarTop",
@@ -114,6 +114,9 @@ export default {
       })
     },
     logout(){
+        logout().then(res=>{
+            console.log(res)
+        })
       this.$message({ message: "注销成功", type: 'success' })
       this.$store.commit('LOGOUT')
     },

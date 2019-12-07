@@ -7,6 +7,13 @@ export function commentList(currentPage,pageSize) {
     })
 }
 
+export function byusercommentList(currentPage,pageSize) {
+    return request({
+        method:'get',
+        url: '/byuser/commentList/'+currentPage+'/'+pageSize
+    })
+}
+
 export function add(grade,userContent) {
     return request({
         url: '/byuser/comment',
