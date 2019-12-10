@@ -3,14 +3,14 @@ import { request } from './request';
 export function commentList(currentPage,pageSize) {
     return request({
         method:'get',
-        url: '/commentList/'+currentPage+'/'+pageSize
+        url: '/comment/'+currentPage+'/'+pageSize
     })
 }
 
 export function byusercommentList(currentPage,pageSize) {
     return request({
         method:'get',
-        url: '/byuser/commentList/'+currentPage+'/'+pageSize
+        url: '/byuser/comment/'+currentPage+'/'+pageSize
     })
 }
 
@@ -22,5 +22,12 @@ export function add(grade,userContent) {
             grade,
             userContent
         }
+    })
+}
+
+export function del(commentId) {
+    return request({
+        url: '/byuser/comment/'+commentId,
+        method:'delete',
     })
 }

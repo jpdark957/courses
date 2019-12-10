@@ -24,13 +24,16 @@
                 </div>
             </div></el-col>
             <!--                          右边时间-->
-            <el-col :span="4"><div class="grid-content bg-purple" style="padding-top: 15px;">
-                <elrate style="margin-bottom: 15px"
-                        :disabled="gradeDisabled"
-                        :value="comment.grade"
-                />
-                <p>{{comment.updatatime|showDate}}</p>
-            </div></el-col>
+            <el-col :span="4">
+                <div class="grid-content bg-purple" style="padding-top: 15px;">
+                    <elrate style="margin-bottom: 15px"
+                            :disabled="gradeDisabled"
+                            :value="comment.grade"
+                    />
+                    <p>{{comment.updatatime|showDate}}</p>
+                    <i v-if="showdelete" class="el-icon-delete" style="margin-top: 10px;font-size: 20px" @click="todel(comment.ccId)"></i>
+                </div>
+            </el-col>
         </el-row>
     </div>
 </template>
@@ -38,7 +41,8 @@
 <script>
     import {formatDate} from "../../../common/utils";
     import {RouteContext} from "../../../common/const";
-    import Elrate from "../../../components/common/Elrate";
+    import Elrate from "../../../components/common/element/Elrate";
+    import {del} from "../../../network/commen";
 
     export default {
         name: "CommentItem",
@@ -57,6 +61,12 @@
                 default() {
                     return {}
                 }
+            },
+            showdelete :{
+                type:Boolean,
+                default() {
+                    return false
+                }
             }
         },
         filters: {
@@ -66,7 +76,26 @@
             }
         },
         methods:{
-
+            // 网络请求
+            todel(ccId){
+                this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    del(ccId)
+                    this.$emit('delSuccess')
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            }
         }
     }
 </script>

@@ -1,23 +1,24 @@
 <template>
     <div>
         <el-card class="box-card box-cards">
-            <eltabs :eltabs="eltabs" @handleClick="handleClick"/>
+            <eltabs  :eltabs="eltabs" @handleClick="handleClick"/>
             <comment-item v-for="(item, index) in commentList" :key="index"
                           :comment="item"
                           v-loading="loading"
-
+                          :showdelete="showdelete"
+                          @delSuccess="delSuccess"
             />
             <div class="page"><elpagination @currentChange="currentChange" :PageInfo="PageInfo"/></div>
             <el-divider></el-divider>
-            <div class="add" v-if="addshow"><comment-add @success="success"/></div>
+            <div class="add" v-if="addshow"><comment-add @success="addSuccess"/></div>
         </el-card>
     </div>
 </template>
 
 <script>
-    import Eltabs from "../../components/common/Eltabs";
+    import Eltabs from "../../components/common/element/Eltabs";
     import CommentItem from "./commentComps/CommentItem";
-    import Elpagination from "../../components/common/Elpagination";
+    import Elpagination from "../../components/common/element/Elpagination";
     import CommentAdd from "./commentComps/CommentAdd";
 
     import {commentList,byusercommentList} from "../../network/commen";
@@ -41,7 +42,8 @@
                 commentList:[],
                 loading:true,
                 PageInfo,
-                addshow:true
+                addshow:true,
+                showdelete:false,
             }
         },
         created() {
@@ -60,11 +62,12 @@
                         let total = res.data.totalElements
                         this.PageInfo=new PageInfo(currentPage,pageSize,total)
                         this.loading=false
+                        this.showdelete=false
+                        this.addshow=true
                     })
             },
             getMyCommentList(currentPage,pageSize) {
                 byusercommentList(currentPage, pageSize).then(res => {
-                    console.log(res);
                     if(res.code==0){
                     this.commentList = res.data.content
                     let currentPage=this.currentPage
@@ -72,19 +75,22 @@
                     let total = res.data.totalElements
                     this.PageInfo=new PageInfo(currentPage,pageSize,total)
                     this.loading=false
+                    this.showdelete=true
+                    this.addshow=false
                     }
                 })
             },
             //事件处理
             handleClick(tab) {
-                console.log(tab.index);
                 this.eltabsindex = tab.index
                 if (tab.index==0){
+                    this.currentPage=1
                     this.getCommentList(this.currentPage,this.pageSize)
-                    this.addshow=true
                 }else{
+                    if(this.$store.state.user.userId){
+                    this.currentPage=1
+                    }
                     this.getMyCommentList(this.currentPage,this.pageSize)
-                    this.addshow=false
                 }
             },
             currentChange(value){
@@ -95,9 +101,12 @@
                     this.getMyCommentList(this.currentPage,this.pageSize)
                 }
             },
-            success(){
+            addSuccess(){
                 //添加成功刷新数据
                 this.getCommentList(this.currentPage,this.pageSize)
+            },
+            delSuccess(){
+                this.getMyCommentList(this.currentPage,this.pageSize)
             }
         }
     };

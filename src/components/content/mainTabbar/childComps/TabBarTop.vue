@@ -51,6 +51,7 @@
       <div class="login" >
             <label>账号: <input v-model="name"/></label><br>
             <label>密码: <input v-model="pass" type="password"/></label>
+          <validate @success="SetToken"></validate>
        </div>
       </span>
       <span slot="footer" class="dialog-footer">
@@ -66,8 +67,9 @@
 <script>
 import { wRoute } from "common/mixin";
 import VideoTab from "./VideoTab";
-import Eldialog from "../../../common/Eldialog";
+import Eldialog from "../../../common/element/Eldialog";
 import {login,logout} from "../../../../network/login";
+import Validate  from "../../../common/else/NC";
 
 export default {
   name: "TabBarTop",
@@ -84,7 +86,8 @@ export default {
   },
   components: {
     VideoTab,
-    Eldialog
+    Eldialog,
+      Validate
   },
   mixins: [wRoute],
   methods:{

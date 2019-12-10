@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import Elrate from "../../../components/common/Elrate";
+    import Elrate from "../../../components/common/element/Elrate";
     import {add} from "../../../network/commen";
 
     export default {

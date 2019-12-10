@@ -3,7 +3,6 @@
     <button @click="backClick">
       <img src="~assets/img/common/back.png" alt />
     </button>
-
     <span class="titleSpan">{{vTitle}}</span>
 
     <div class="UImgBox">
