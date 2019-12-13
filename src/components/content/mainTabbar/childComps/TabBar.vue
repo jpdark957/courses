@@ -6,7 +6,7 @@
       <el-col :span="2" v-for="(item, index) in navData" :key="index">
         <nav-main :path="item.liPath">
           <ul>
-            <li>{{item.liCon}}</li>
+            <li><i :class="item.icon"></i>&nbsp;{{item.liCon}}</li>
           </ul>
         </nav-main>
       </el-col>
@@ -34,22 +34,27 @@ export default {
       navData: [
         {
           liCon: "首页",
+          icon:"el-icon-s-home",
           liPath: "/home"
         },
         {
           liCon: "教学视频",
+          icon:"el-icon-video-camera",
           liPath: "/teachVideo"
         },
         {
           liCon: "教学资料",
+          icon:"el-icon-tickets",
           liPath: "/home"
         },
         {
           liCon: "课程讨论",
+          icon:"el-icon-chat-dot-square",
           liPath: "/home"
         },
         {
           liCon: "教学反馈",
+          icon:"el-icon-chat-line-square",
           liPath: "/comment"
         }
       ]
