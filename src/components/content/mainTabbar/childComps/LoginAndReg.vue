@@ -128,7 +128,7 @@
                     ],
                     userNickname: [
                         { required: true, message: '请输入账号', trigger: 'blur' },
-                        { min: 0, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+                        { min: 1, max: 6, message: '长度在 1 到 6 个字符', trigger: 'blur' }
                     ],
                     mail: [
                         { required: true, message: '请输入邮箱', trigger: 'blur' },
@@ -157,6 +157,9 @@
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             },
+            close(){
+                this.user={}
+            },
             getUser(name,pass){
                 login(name,pass).then(res => {
                     if(res.code==0){
@@ -168,9 +171,6 @@
                         this.$message({ message: res.msg, type: 'error' })
                     }
                 })
-            },
-            close(){
-              this.user={}
             },
             //获取验证码
             getCode(){

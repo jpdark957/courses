@@ -5,7 +5,7 @@
         <el-avatar :size="30" :src="userIcon"></el-avatar>
       </span>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-user-solid">个人中心</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-user-solid" command="me">个人中心</el-dropdown-item>
                 <el-dropdown-item icon="el-icon-star-on">我的收藏</el-dropdown-item>
                 <el-dropdown-item icon="el-icon-switch-button" command="logout" divided>注销</el-dropdown-item>
             </el-dropdown-menu>
@@ -28,9 +28,14 @@
                 logout()
                 this.$message({ message: "注销成功", type: 'success' })
                 this.$store.commit('LOGOUT')
+                this.$router.push('/home')
             },
             handleCommand(command) {
                 command=="logout" && this.logout()
+                command=="me" && this.me()
+            },
+            me(){
+                this.$router.push('/me')
             }
         },
         computed:{
