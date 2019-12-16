@@ -2,6 +2,13 @@
     <div>
         <el-card class="box-card box-cards">
             <eltabs  :eltabs="eltabs" @handleClick="handleClick" />
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>教学反馈</el-breadcrumb-item>
+        </el-breadcrumb>
+        </el-card>
+        <el-card class="box-card box-cards">
+            <eltabs  :eltabs="eltabs" @handleClick="handleClick"/>
             <comment-item v-for="(item, index) in commentList" :key="index"
                           :comment="item"
                           v-loading="loading"
@@ -35,7 +42,7 @@
         },
         data() {
             return {
-                eltabs: ["课程评价", "我的评论"],
+                eltabs: ["课程评价", "我的评价"],
                 eltabsindex: 0,
                 currentPage:1,
                 pageSize:10,

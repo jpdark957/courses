@@ -2,7 +2,7 @@
   <div>
     <div
       class="l-captcha"
-      data-site-key="aab758dfe65d67a418589e950ea07b05"
+      data-site-key="ac6505f6a667179f754b56eaa33b6abb"
       data-width="50%"
       data-callback="getResponse"
     ></div>

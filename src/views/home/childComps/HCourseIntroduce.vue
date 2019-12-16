@@ -20,7 +20,7 @@
       <div v-show="isShow(index2)" v-for="(item,index2) in HomeTabAContent" :key="index2" class="cDiv">
         <!-- {{item}} -->
         <div class="imgDiv">
-          <img :src="RouteContext+item.labelImg" />
+          <img :src="item.labelImg" />
         </div>
         <div class="textDiv">
           <ul>

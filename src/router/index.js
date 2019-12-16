@@ -7,6 +7,8 @@ const videoDetail = () => import('@/views/teachVideo/childComps/videoDetail')
 const Comment = () => import('@/views/comment/Comment')
 const TeachData = () => import('@/views/teachData/TeachData')
 const dataDetail = () => import('@/views/teachData/childComps/dataDetail')
+const Me = () => import('@/views/me/Me')
+
 //安装插件
 Vue.use(VueRouter)
 
@@ -30,6 +32,10 @@ const routes = [
   {
     path: '/comment',
     component: Comment
+  },
+  {
+    path: '/me',
+    component: Me
   }
   ,
   {
