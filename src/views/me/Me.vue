@@ -26,8 +26,10 @@
                             :action="RouteContext+actionUrl"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="RouteContext+imageUrl" class="avatar">
+                            :before-upload="beforeAvatarUpload"
+                            :headers="sessionId"
+                    >
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
                     </el-upload>
                 </el-col>
                 <el-col :span="10" :offset="2">
@@ -102,6 +104,9 @@
                 }
             };
             return {
+                sessionId: {
+                    Authorization:  this.$store.state.user.id
+                },
                 dialogPass:false,
                 RouteContext,
                 user: {
@@ -141,7 +146,14 @@
         },
         computed:{
             actionUrl(){
-                return '/user/'+this.user.userId+'/icon'
+                return '/byuser/user/icon'
+            },
+            userIcon(){
+                if(this.$store.state.user.userIcon){
+                    return  this.$store.state.user.userIcon
+                }else {
+                    return "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                }
             }
         },
         methods:{
@@ -177,6 +189,7 @@
                })
             },
             handleAvatarSuccess(res, file) {
+                console.log(res)
                 this.imageUrl = URL.createObjectURL(file.raw);
                 this.$store.commit('SET_USERICON',res.data)
                 this.imageUrl = res.data

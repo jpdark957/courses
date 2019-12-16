@@ -2,7 +2,7 @@ import { request } from './request';
 
 export function updateUser(userNumber,userNickname) {
     return request({
-        url: '/user',
+        url: '/byuser/user',
         method: 'put',
         params: {
             userNumber,
@@ -12,7 +12,7 @@ export function updateUser(userNumber,userNickname) {
 }
 export function updatePass(oldpass,pass) {
     return request({
-        url: '/user/pass',
+        url: '/byuser/user/pass',
         method: 'put',
         params: {
             oldpass,
