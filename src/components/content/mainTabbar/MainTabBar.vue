@@ -1,7 +1,7 @@
 <template>
   <div class="main-tab-bar">
     <tab-bar-top />
-    <tab-bar v-if="this.path != '/teachVideo/'+this.rou" />
+    <tab-bar v-if="this.path != '/teachVideo/'+$route.params.id " />
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   name: 'MainTabBar',
   data() {
     return {
-      rou: 'asda'
+      rou: '1a6sf15g'
     }
   },
   components: {

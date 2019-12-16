@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="top-user" v-if="this.path != '/teachVideo/'+this.rou">
+    <div class="top-user" v-if="this.path != '/teachVideo/'+$route.params.id">
       <div>
 
           <el-dropdown v-if="$store.state.user.userName!=null"  @command="handleCommand" >
@@ -75,7 +75,7 @@ export default {
   name: "TabBarTop",
   data() {
     return {
-      rou: "asda",
+      rou: '1a6sf15g',
       centerDialogVisible:false,
       name:'',
       pass:'',

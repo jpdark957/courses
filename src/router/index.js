@@ -3,9 +3,10 @@ import VueRouter from 'vue-router'
 
 const Home = () => import('@/views/home/Home')
 const TeachVideo = () => import('@/views/teachVideo/TeachVideo')
-const VideoDetail = () => import('@/views/teachVideo/childComps/VideoDetail')
+const videoDetail = () => import('@/views/teachVideo/childComps/videoDetail')
 const Comment = () => import('@/views/comment/Comment')
-
+const TeachData = () => import('@/views/teachData/TeachData')
+const dataDetail = () => import('@/views/teachData/childComps/dataDetail')
 //安装插件
 Vue.use(VueRouter)
 
@@ -24,12 +25,21 @@ const routes = [
   },
   {
     path: '/teachVideo/:id',
-    component: VideoDetail
+    component: videoDetail
   },
   {
     path: '/comment',
     component: Comment
   }
+  ,
+  {
+    path: '/teachData',
+    component: TeachData
+  },
+  {
+    path: '/teachData/:id',
+    component: dataDetail
+  },
 ]
 
 const router = new VueRouter({

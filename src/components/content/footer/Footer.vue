@@ -1,5 +1,5 @@
 <template>
-  <div class="footerBox" v-if="this.path != '/teachVideo/'+this.rou">
+  <div class="footerBox" v-if="this.path != '/teachVideo/'+$route.params.id ">
     <slot>
       <footer-con />
     </slot>
@@ -13,7 +13,6 @@ export default {
   name: "cFooter",
   data() {
     return {
-      rou: "asda"
     };
   },
   components: {

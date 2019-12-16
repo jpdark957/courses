@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-card class="box-card box-cards">
-            <eltabs  :eltabs="eltabs" @handleClick="handleClick"/>
+            <eltabs  :eltabs="eltabs" @handleClick="handleClick" />
             <comment-item v-for="(item, index) in commentList" :key="index"
                           :comment="item"
                           v-loading="loading"

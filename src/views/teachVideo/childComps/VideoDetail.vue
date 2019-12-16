@@ -1,23 +1,41 @@
 <template>
-  <div class="vDetail">
-    <video src="~assets/video/aaa.mp4" controls></video>
-    <div class="videoList">
-      <ul>
-        <li v-for="(item, index) in vListCon" :key="index">
-          <img src="~assets/img/common/play.png" alt />
-          <p class="vName">{{item.vConName}}</p>
-          <p class="vTime">{{item.vConTime}}</p>
-        </li>
-      </ul>
-    </div>
+  <div>
+    <el-row :type="flex" :justify="end">
+      <el-col :span="12" :offset="3" :xs="{span: 24, offset: 0, push: 0, class: sss}" >
+        <video src="~assets/video/aaa.mp4" controls></video>
+      </el-col>
+      <el-col :span="4" class="videoList" :push="1" :xs="{span: 24, offset: 0, push: 0}">
+        <el-col :span="24" class="listHeader">
+          <span class="el-icon-s-grid">视频选集</span>
+          <span>{{this.sActive+1}}/{{this.comLength}}</span>
+        </el-col>
+        <el-col :span="24" class="listDetail">
+          <ul class="listUl">
+            <li v-for="(item, index) in vListCon" :key="index" class="listLi" :class="{active: sActive === index}" @click="active(index)">
+              <span>{{item.vConName}}</span>
+              <span>{{item.vConTime}}</span>
+            </li>
+          </ul>
+        </el-col>
+      </el-col>
+    </el-row>
+
+  <detail-comment />
+
+
+
+
+
   </div>
 </template>
 
 <script>
+import detailComment from './detailComment'
 export default {
-  name: "VideoDetail",
+  name: "videoDetail",
   data() {
     return {
+      nowVideo: 0,
       vListCon: [
         {
           vConName: '1.1 Linux系统简介-UNIX发展历史和发行版本',
@@ -99,16 +117,133 @@ export default {
           vConName: '4.5 Linux常用命令-文件搜索命令-用户管理命令',
           vConTime: '09:41'
         },
-      ]
+      ],
+      sActive: 0,
     }
   },
   components: {
+    detailComment
+  },
+  methods: {
+    active(index) {
+      this.sActive = index 
+    }
+  },
+  computed: {
+   comLength() {
+     return this.vListCon.length
+   }
   }
 };
 </script>
 
 <style scoped>
-.vDetail {
+.el-row {
+  margin-top: 4em;
+}
+video {
+  width: 100%;
+  height: 30vmax;
+  transition: 1s;
+  background-color: black;
+  outline: none;
+}
+
+.videoList {
+  height: 30vmax;
+  background-color: rgba(209,209,209,.5);
+}
+
+.listHeader {
+  font-size: 16px;
+  padding-top: 3%;
+  margin-bottom: 2%;
+  /* position:fixed; */
+}
+.listHeader>span:first-child {
+  padding-left: 1em;
+}
+.listHeader>span:last-child {
+  color: #999999;
+  font-size: 12px;
+  float: right;
+  text-align: center;
+  padding-right: 1em;
+  padding-top: .2em;
+}
+.listUl {
+  overflow: auto;
+  margin-left: 5%;
+  width: 90%;
+  list-style: none;
+}
+@media screen {
+  .listUl {
+    height: 27vmax;
+    transition: 1s;
+  }
+}
+
+
+@media (min-width: 420px) and (max-width: 768px){
+  video {
+    height: 50vmax;
+    transition: 1s;
+  }
+}
+@media (max-width: 420px) {
+  video {
+    height: 40vmax;
+    transition: 1s;
+  }
+}
+@media (max-width: 768px){
+  .listUl {
+    height: 22vmax;
+    transition: 1s;
+  }
+  .el-row {
+    margin-top: 0em;
+  }
+
+}
+::-webkit-scrollbar {
+  width: 0 !important;
+} 
+
+
+.listLi {
+  cursor: pointer;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 5px 5px;
+}
+.listLi:hover {
+  background-color: rgba(255,255,255,.2);
+  color: var(--color-main);
+  font-weight: 500;
+}
+.listLi>span:first-child {
+  width: 70%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  float: left;
+  padding-left: 2%;
+}
+.listLi>span:last-child {
+  width: 15%;
+  float: right;
+  font-weight: bolder;
+}
+
+.active {
+  background-color: rgba(255,255,255,.5);
+  color: var(--color-main);
+  font-weight: bolder;
+}
+
+/* .vDetail {
   width: 100%;
   height: 697px;
 }
@@ -140,7 +275,7 @@ video {
 ul li {
   width: 100%;
   height: 9%;
-  /* margin-bottom: 2%; */
+  margin-bottom: 2%; 
   border: 1px solid #bfbfbf;
   background-color: #fff;
   border-top: none;
@@ -174,5 +309,5 @@ li p {
   width: 15%;
   padding-right: 4%;
   float: right;
-}
-</style>
+} */
+ </style>

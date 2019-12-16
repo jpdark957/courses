@@ -42,7 +42,7 @@ export default {
         },
         {
           liCon: "教学资料",
-          liPath: "/home"
+          liPath: "/teachData"
         },
         {
           liCon: "课程讨论",

@@ -14,7 +14,7 @@
       </div>
       <div class="videoList">
         <ul class="tools">
-          <li v-for="(item,index) in toolList" :key="index">
+          <li v-for="(item,index) in toolList" :key="index" @click="detailClick(item)">
             <img :src="item.tImg" alt="">
             <span>{{item.tName}}</span>
           </li>
@@ -33,6 +33,20 @@
         </ul>
       </div>
     </div>
+
+
+    <el-dialog
+  :visible.sync="centerDialogVisible"
+  width="70%"
+  center>
+  <span>
+    <img :src="watchDetail" alt="" class="detail">
+  </span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="downLoad">下 载</el-button>
+  </span>
+</el-dialog>
   </content-box>
 </template>
 
@@ -42,33 +56,59 @@ export default {
   name: 'HStateStudy',
   data() {
     return {
+      centerDialogVisible: false,
       sName: '认识Linux',
       state: '从这里开始',
       titleP: '想的多一定没做的多有效，然而不想便做一定没什么效果。',
       toolList: [
         {
           tImg: require('assets/img/home/mindMapping.png'),
-          tName: 'Linux学习思维导图'
+          tName: 'Linux学习思维导图',
+          tDetail: require('assets/img/home/1.jpg')
         },
         {
           tImg: require('assets/img/home/catalog.png'),
-          tName: 'Linux目录结构'
+          tName: 'Linux目录结构',
+          tDetail: require('assets/img/home/2.jpg')
         },
         {
           tImg: require('assets/img/home/instructions.png'),
-          tName: 'Linux常见指令'
+          tName: 'Linux常见指令',
+          tDetail: require('assets/img/home/3.png')
         },
         {
           tImg: require('assets/img/home/null.png'),
-          tName: '暂无'
+          tName: '暂无',
+          
         }
       ],
-
+      ii: ''
     }
   },
   components: {
     ContentBox
   },
+  methods: {
+    open4() {
+      this.$notify.error({
+          title: '错误',
+          message: '暂无该详细图片',
+        });
+    },
+    detailClick(item) {
+      if(item.tDetail) {
+      this.centerDialogVisible = true
+      this.ii = item.tDetail
+      }
+      else this.open4()
+    },
+      
+  },
+  computed: {
+    watchDetail: function() {
+      return this.ii
+    }
+  }
 }
 </script>
 
@@ -211,4 +251,7 @@ video {
   color: #f0f0f0;
 }
 
+.detail {
+  width: 100%;
+}
 </style>
