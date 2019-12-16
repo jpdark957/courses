@@ -2,7 +2,6 @@
   <div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="(item, index) in eltabs" :key="index" :label="item"></el-tab-pane>
-        <el-tab-pane v-for="(item, index) in eltabs" :key="index" :label="item"></el-tab-pane>
     </el-tabs>
   </div>
 </template>

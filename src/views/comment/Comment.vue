@@ -1,7 +1,6 @@
 <template>
     <div>
         <el-card class="box-card box-cards">
-            <eltabs  :eltabs="eltabs" @handleClick="handleClick" />
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>教学反馈</el-breadcrumb-item>
@@ -27,11 +26,8 @@
     import CommentItem from "./commentComps/CommentItem";
     import Elpagination from "../../components/common/element/Elpagination";
     import CommentAdd from "./commentComps/CommentAdd";
-
     import {commentList,byusercommentList} from "../../network/commen";
     import {PageInfo} from "../../common/utils";
-
-
     export default {
         name: "Comment",
         components: {
@@ -57,7 +53,6 @@
             this.getCommentList(this.currentPage,this.pageSize)
         },
         mounted() {
-
         },
         methods: {
             //网络请求
