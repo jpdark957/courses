@@ -1,33 +1,33 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="18" :offset="2" class="vClassList">
-        <el-col
-          :span="2"
-          :offset="1"
-          v-for="(item,index) in sort"
-          :key="index"
-          @click.native="sClick(index)"
-          :class="{sAct: sActive === index}" :xs="8" 
-        >{{item}}</el-col>
+      <el-col :span="18" :offset="3" :xs="{span: 24, offset: 0}">
+        <el-col :xs="{span: 12 , offset: 6}" class="eltab" >
+          <eltabs :eltabs="eltabs" @handleClick="handleClick"/>
+        </el-col>
       </el-col>
+
     </el-row>
     <el-row :gutter="60">
-      <el-col :span="21" :offset="1" v-for="(vctent, index2) in vData" :key="index2">
+      <el-col :span="21" :offset="1" v-for="(vctent, index2) in vData" :key="index2" :xs="{span: 24, offset: 0}">
         <el-col
           :span="5"
           :offset="1"
           v-for="(item, index) in vctent"
           :key="index"
           class="vContent"
-          v-show="isShow(index2)" :xs="24"
+          v-show="isShow(index2)" 
           :v-model="vctent"
+          :xs="{span: 24,offset: 0}"
+          :sm="{span: 8,offset: 0}"
+          :md="{span: 8, offset: 0}"
+          :lg="{span: 5,offset: 1}"
         >
           <div class="vImg" @click="itemClick(index)">
             <img :src="item.vImage" alt>
           </div>
           <div class="vCon">
-            <p class="vTitle" @click="itemClick">{{item.vTit}}</p>
+            <p class="vTitle" @click="itemClick(index)">{{item.vTit}}</p>
             <div class="vBottom">
               <div>
                 <img src="~assets/img/common/playbackVolume.png" alt />
@@ -46,16 +46,16 @@
 </template>
 
 <script>
-import {sortByKey} from 'common/computed'
+import Eltabs from "components/common/element/Eltabs"//tab栏插件
+import { sortByKey } from 'common/computed'
 import { inDetail } from 'common/mixin'
+
 export default {
   name: "videoMain",
   data() {
     return {
-      sort: ["视频热度排序", "上传时间排序"],
+      eltabs: ["按热度排序", "按时间排序"],
       sActive: 0,
-      rou: '1a6sf15g',
-      vctent: {},
       vData: [
         [
           {
@@ -239,17 +239,19 @@ export default {
       ]
     };
   },
+  components: {
+    Eltabs
+  },
   methods: {
-    sClick(index) {
-      this.sActive = index;
+    handleClick(tab) {
+      this.sActive = parseInt(tab.index)//要将String转成integer类型
     },
     isShow(index2) {
-      if (index2 === this.sActive) return true;
+      if(index2 === this.sActive) return true//判断显示哪部分视频
     },
-
   },
-  mixins: [ inDetail ],
-  mounted() {
+  mixins: [ inDetail ],//详情页混动
+  mounted() {//计算热度
     sortByKey(this.vData[0],'vPlay')
   },
   beforeUpdate() {
@@ -262,32 +264,16 @@ export default {
 <style scoped>
 .el-row {
   margin-top: 20px;
+  width: 100%;
 }
-
-.vClassList {
-  height: 30px;
-  margin-bottom: 0px;
-  margin-left: 10%;
-  border-bottom: 1px solid #d1d1d1;
-}
-.vClassList > .el-col {
-  text-align: center;
-  height: 100%;
-
-  cursor: pointer;
-}
-.vClassList > .el-col:hover {
-  color: var(--color-main);
-}
-.sAct {
-  color: var(--color-main);
-  border-bottom: 2px solid var(--color-main);
+.eltab {
+  -webkit-tap-highlight-color:rgba(0,0,0,0);/* 除掉手机端点击高亮效果 */
+  -webkit-tap-highlight-color:transparent;
 }
 
 .vContent {
   margin-bottom: 35px;
   height: 200px;
-  /* background-color: red; */
 }
 
 .vImg {
@@ -346,11 +332,25 @@ export default {
   padding-top: 2%;
   margin-left: 5%;
   margin-right: 5%;
-  /* background-color: goldenrod; */
   float: left;
   color: #8a8a8a;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+@media (max-width: 768px) {
+  .vContent {
+    width: 50%;
+    transition: .5s;
+  }
+}
+@media (max-width: 442px) {
+  .vContent {
+    margin-left: 10%;
+    width: 100%;
+    transition: .5s;
+  }
+}
+
 </style>

@@ -29,7 +29,7 @@ export default {
   methods: {
     handleClick(tab, event) {
       this.$emit("handleClick", tab, event);
-    }
+    },
   }
 };
 </script>

@@ -9,7 +9,8 @@
     <div class="studyContent">
       <div class="videoCon">
         <video controls>
-          <source src="~assets/video/Linux.mp4">
+          <source src="http://gdkmlzh.cn-gd.ufileos.com/shipin%2FLinux.mp4?UCloudPublicKey=7XUUrIZu_COBbktItgfRT0tYkbMP_GSP-OWjXsTe&Signature=WWXG59WyVrlACJwng5pkqndzpdo%3D&Expires=1576581440
+">
         </video>
       </div>
       <div class="videoList">
