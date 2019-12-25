@@ -17,7 +17,12 @@
     </div>
 
     <div class="courseContent">
-      <div v-show="isShow(index2)" v-for="(item,index2) in HomeTabAContent" :key="index2" class="cDiv">
+      <div
+        v-show="isShow(index2)"
+        v-for="(item,index2) in HomeTabAContent"
+        :key="index2"
+        class="cDiv"
+      >
         <!-- {{item}} -->
         <div class="imgDiv">
           <img :src="item.labelImg" />
@@ -26,19 +31,18 @@
           <ul>
             <li v-for="item2 in item.list" :key="item2">{{item2}}</li>
           </ul>
-         
         </div>
-         <div class="btn">
-           <button>了解更多</button>
-          </div>
+        <div class="btn">
+          <button>了解更多</button>
+        </div>
       </div>
     </div>
   </content-box>
 </template>
 
 <script>
-import {RouteContext} from 'common/const.js'
-import ContentBox from 'components/content/overall/ContentBox'
+import { RouteContext } from "common/const.js";
+import ContentBox from "components/content/overall/ContentBox";
 export default {
   components: {
     ContentBox
@@ -55,12 +59,11 @@ export default {
     HomeTabAContent: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     }
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     tabMove(index) {
       this.active = index;
@@ -68,13 +71,11 @@ export default {
     isShow(index2) {
       if (index2 === this.active) return true;
     }
-  },
+  }
 };
 </script>
 
 <style scoped>
-
-
 .isActive {
   background-color: var(--color-main);
   color: #fff;
@@ -98,6 +99,7 @@ export default {
   line-height: 50px;
   border: 2px solid var(--color-main);
   background-color: #f0f0f0;
+
 }
 .courseTab li {
   margin-left: 0.8%;
@@ -107,6 +109,9 @@ export default {
   border-left: 0.1px solid var(--color-main);
   border-right: 0.1px solid var(--color-main);
   float: left;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .courseTab li:hover {
   background-color: var(--color-main);
@@ -118,17 +123,17 @@ export default {
 .courseContent {
   width: 80%;
   height: 400px;
-  background-color:#fbfbfb;
+  background-color: #fbfbfb;
   /* background-color: #fff; */
 
   margin: 2% auto 0 auto;
   border: 1px solid #e7e7e7;
 }
-.courseContent>div {
+.courseContent > div {
   width: 98%;
   height: 96%;
   margin: auto;
-  margin-top: .8%;
+  margin-top: 0.8%;
   background-color: #fff;
 }
 .courseContent .imgDiv {
@@ -154,16 +159,15 @@ export default {
   color: grey;
   font-size: 14px;
   overflow: auto;
-  margin-left: -.1%;
+  margin-left: -0.1%;
 }
 .textDiv::-webkit-scrollbar {
-  display:none;
+  display: none;
 }
 .textDiv ul {
   width: 100%;
   height: 100%;
-  list-style-position:inside;
-
+  list-style-position: inside;
 }
 
 .textDiv ul li {
@@ -181,13 +185,51 @@ export default {
   height: 40%;
   float: right;
   background-color: #8194b4;
+  color: #fff;
   outline: none;
-  border-radius: 7px 7px ;
+  border-radius: 7px 7px;
 }
 .btn button:hover {
   background-color: var(--color-main);
   color: #fff;
-  transition: .3s;
-  
+  transition: 0.3s;
+}
+
+/* 适配手机端 */
+@media (max-width: 804px) {
+  .ContentBox {
+    width: 100%;
+  }
+  .btn button {
+    width: 30%;
+  }
+}
+@media (max-width: 508px) {
+  .ContentBox {
+    height: 480px;
+  }
+  .imgDiv {
+    display: none;
+  }
+  .courseContent {
+    height: 270px;
+  }
+  .courseContent .textDiv {
+    width: 100%;
+    height: 75%;
+  }
+  .btn button {
+    width: 45%;
+    height: 50%;
+  }
+  .courseTab ul {
+    width: 98%;
+    margin: 0 auto;
+  }
+  .courseTab li {
+    margin-left: .8%;
+    width: 23.8%;
+    height: 100%;
+  }
 }
 </style>

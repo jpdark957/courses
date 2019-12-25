@@ -1,64 +1,83 @@
 <template>
   <el-row>
-    <el-col
-      :span="18"
-      :offset="3"
-      :xs="{span: 24, offset: 0}"
-      class="dataCon"
-      v-for="(item, index) in vData"
-      :key="index"
-    >
-      <el-col
-        :span="2"
-        class="imgCon"
-        :xs="{span: 5, offset: 1}"
-        :offset="1"
-        @click.native="itemClick(index)"
-      >
-        <img :src="item.vImage" alt />
-      </el-col>
-      <el-col
-        :lg="{span: 15}"
-        :md="{span: 14}"
-        :sm="{span: 13}"
-        class="textCon"
-        :offset="1"
-        :xs="{span: 16}"
-      >
-        <h2 @click="itemClick(index)">{{item.dataTitle}}</h2>
-        <el-col :span="24">
-          <span>
-            <i class="el-icon-film el-icon--left"></i>视频地址：
-            <span class="videoRou">{{item.vTit}}</span>
-          </span>
+    <!-- 移动端tab栏 -->
+    <el-col class="hidden-sm-and-up">
+      <el-tabs type="border-card">
+        <el-tab-pane v-for="(item, index) in dList" :key="index" :label="item" />
+      </el-tabs>
+    </el-col>
+    <!-- PC端tab栏 -->
+    <el-col :span="4" :offset="2" :xs="{span: 24, offset: 0}" class="hidden-xs-only">
+      <el-card class="box-card" v-for="(item, index) in dList" :key="index">{{item}}</el-card>
+    </el-col>
+    <!-- 内容 -->
+    <el-col :span="14" :offset="0" :sm="{span: 17}" :xs="{span: 24}">
+      <el-col v-for="(item, index) in vData" :key="index" class="dataCon">
+        <!-- 资料图片 -->
+        <el-col
+          :span="2"
+          class="imgCon"
+          :xs="{span: 5, offset: 1}"
+          :sm="{span: 4}"
+          :offset="1"
+          @click.native="itemClick(index)"
+        >
+          <img :src="item.vImage" alt />
         </el-col>
-        <el-col :span="24" class="textDetail">
-          <span>
-            <i class="el-icon-time el-icon--left"></i>
-            {{item.dTime}}
-          </span>
-          <span>
-            <i class="el-icon-thumb el-icon--left"></i>
-            {{item.dColl}}
-          </span>
+        <!-- 资料内容 -->
+        <el-col
+          :xs="{span: 16}"
+          :sm="{span: 12}"
+          :md="{span: 13}"
+          :lg="{span: 13}"
+          class="textCon"
+          :offset="1"
+        >
+          <h2 @click="itemClick(index)">{{item.dataTitle}}</h2>
+          <el-col :span="24">
+            <span>
+              <i class="el-icon-film el-icon--left"></i>视频地址：
+              <span class="videoRou">{{item.vTit}}</span>
+            </span>
+          </el-col>
+          <el-col :span="24" class="textDetail">
+            <span>
+              <i class="el-icon-time el-icon--left"></i>
+              {{item.dTime}}
+            </span>
+            <span>
+              <i class="el-icon-thumb el-icon--left"></i>
+              {{item.dColl}}
+            </span>
+          </el-col>
         </el-col>
-      </el-col>
-      <el-col :span="3" class="btnCon" :offset="1" :xs="{span: 0, offset: 0}">
-        <el-button type="primary" @click="itemClick(index)">
-          查看全部
-          <i class="el-icon-folder-opened el-icon--right"></i>
-        </el-button>
+        <!-- 资料按钮 -->
+        <el-col
+          :span="3"
+          class="btnCon"
+          :offset="1"
+          :xs="{span: 0, offset: 0}"
+          :sm="{span: 2, offset: 0}"
+          :md="{span: 3 ,offset: 0}"
+          :lg="{span: 3 ,offset: 1}"
+        >
+          <el-button type="primary" @click="itemClick(index)">
+            查看全部
+            <i class="el-icon-folder-opened el-icon--right"></i>
+          </el-button>
+        </el-col>
       </el-col>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import { inDetail } from 'common/mixin'
+import { inDetail } from "common/mixin";
 export default {
   name: "detaMain",
   data() {
     return {
+      dList: ["教学课件", "教学视频", "教学方案", "教学日历", "教学标准"],
       vData: [
         {
           id: "g1tg23",
@@ -191,8 +210,7 @@ export default {
       ]
     };
   },
-  mixins: [ inDetail ],
-
+  mixins: [inDetail]
 };
 </script>
 
@@ -201,6 +219,7 @@ export default {
   background-color: #f1f1f1;
   margin-top: 2vh;
 }
+
 .dataCon {
   height: 18vh;
   background-color: #fff;
@@ -209,6 +228,7 @@ export default {
 .dataCon:hover {
   border: 1px solid #4b98ff;
 }
+
 .imgCon {
   height: 14vh;
   margin-top: 2vh;
@@ -255,6 +275,9 @@ h2:hover {
   margin-top: 8vh;
   /* background-color: red; */
 }
+.dList {
+  display: none;
+}
 @media (max-width: 768px) {
   h2 {
     font-size: 14px;
@@ -264,5 +287,26 @@ h2:hover {
     margin-top: 0.5em;
     font-size: 12px;
   }
+  .dList {
+    display: block;
+  }
+
+}
+
+.el-card {
+  text-align: center;
+  font-size: 14px;
+  color: rgb(102, 102, 102);
+  cursor: pointer;
+}
+.el-card:hover {
+  color: rgb(64, 158, 255);
+  box-shadow: 0px 0px 10px rgb(64, 158, 255);
+}
+.el-row > .el-col:nth-child(2) {
+  margin-right: 2em;
+}
+.el-tabs {
+  border-bottom: none;
 }
 </style>

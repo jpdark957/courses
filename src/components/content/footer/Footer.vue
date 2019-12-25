@@ -25,7 +25,6 @@ export default {
 <style scoped>
 .footerBox {
   width: 100%;
-  height: 50px;
   background-color: rgba(33, 68, 131);
 }
 </style>

@@ -7,6 +7,7 @@ const videoDetail = () => import('@/views/teachVideo/childComps/videoDetail')
 const Comment = () => import('@/views/comment/Comment')
 const TeachData = () => import('@/views/teachData/TeachData')
 const dataDetail = () => import('@/views/teachData/childComps/dataDetail')
+const discussion = () => import('@/views/courseDiscussion/discussion')
 const Me = () => import('@/views/me/Me')
 
 //安装插件
@@ -45,6 +46,10 @@ const routes = [
   {
     path: '/teachData/:id',
     component: dataDetail
+  },
+  {
+    path: '/discussion',
+    component: discussion
   },
 ]
 

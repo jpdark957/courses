@@ -1,11 +1,4 @@
 <template>
-  <!-- <el-row>
-    <el-col :span="22" :offset="2">
-      <el-col class="ContentBox" :span="22">
-        <slot></slot>
-      </el-col>
-    </el-col>
-  </el-row> -->
   <div class="ContentBox">
     <slot></slot>
   </div>

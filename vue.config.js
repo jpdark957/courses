@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 module.exports = {
   configureWebpack: {
     resolve: {
@@ -8,7 +9,14 @@ module.exports = {
         'network': '@/network',
         'views': '@/views',
       }
-    }
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "windows.jQuery": "jquery"
+      })
+    ]
   },
   devServer: {
     //跨域
@@ -27,6 +35,7 @@ module.exports = {
         }
       }
     }
-  }
+  },
+
 }
 

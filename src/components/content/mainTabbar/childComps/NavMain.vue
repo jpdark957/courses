@@ -15,13 +15,7 @@ export default {
   props: {
     path: String
   },
-  methods: {
-    navClick() {
-      this.$router.push(this.path).catch(err => {
-        console.log(err)
-      });
-    }
-  }
+
 };
 </script>
 

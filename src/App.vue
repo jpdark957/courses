@@ -12,6 +12,7 @@
 <script>
 import MainTabBar from 'components/content/mainTabbar/MainTabBar'
 import cFooter from 'components/content/footer/Footer'
+import 'element-ui/lib/theme-chalk/display.css';
 
 export default {
   name: 'App',
@@ -24,4 +25,5 @@ export default {
 
 <style scoped>
   @import "assets/css/base.css";
+
 </style>
