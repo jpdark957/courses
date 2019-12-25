@@ -7,7 +7,7 @@
                 <div class="grid-content bg-purple iocn">
                     <el-image class="iocnImg"
                               style="width: 70px; height: 70px"
-                              :src="RouteContext+comment.user.userIcon"
+                              :src="comment.user.userIcon"
                     ></el-image>
                 </div>
             </el-col>

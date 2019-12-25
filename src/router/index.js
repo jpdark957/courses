@@ -6,6 +6,9 @@ const TeachVideo = () => import('@/views/teachVideo/TeachVideo')
 const VideoDetail = () => import('@/views/teachVideo/childComps/VideoDetail')
 const Comment = () => import('@/views/comment/Comment')
 const Me = () => import('@/views/me/Me')
+const Test = () => import('@/views/test/test')
+const Test1 = () => import('@/views/test/test1')
+const Chat = () => import('@/views/chat/Chat')
 
 //安装插件
 Vue.use(VueRouter)
@@ -34,6 +37,18 @@ const routes = [
   {
     path: '/me',
     component: Me
+  } ,
+  {
+    path: '/test',
+    component: Test
+  },
+  {
+    path: '/test1',
+    component: Test1
+  },
+  {
+    path: '/chat',
+    component: Chat
   }
 ]
 

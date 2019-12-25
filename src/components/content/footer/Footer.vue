@@ -1,5 +1,5 @@
 <template>
-  <div class="footerBox" v-if="this.path != '/teachVideo/'+this.rou">
+  <div class="footerBox" v-if="this.path != '/teachVideo/'+this.rou && this.path != '/test'  ">
     <slot>
       <footer-con />
     </slot>
