@@ -1,6 +1,5 @@
 <template>
   <el-row class="tab-bar">
-
     <!-- PC端导航栏 -->
     <el-col :span="19" :offset="5">
       <el-col

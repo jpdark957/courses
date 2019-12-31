@@ -5,26 +5,41 @@
     </button>
     <span class="titleSpan">{{vTitle}}</span>
 
-    <div class="UImgBox">
-     <img src="~assets/img/common/top.jpg" class="userImg">
-    </div>
+    <!-- <div class="UImgBox">
+      <img src="~assets/img/common/top.jpg" class="userImg" />
+    </div>-->
+
+    <login-and-reg v-if="!user" class="login" />
+    <user v-if="user" class="user"/>
   </div>
 </template>
 
 <script>
+import LoginAndReg from "./LoginAndReg";
+import User from "./User";
+
 export default {
   name: "VideoTab",
   data() {
     return {
-      vTitle: '1.1 Linux简介'
-    }
+      vTitle: "1.1 Linux简介"
+    };
+  },
+  components: {
+    LoginAndReg,
+    User
   },
   methods: {
     backClick() {
-      this.$router.go(-1)
+      this.$router.go(-1);
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user.id != null;
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -33,7 +48,7 @@ export default {
   height: 60px;
   background-color: #333;
   color: white;
-  align-items:center;
+  align-items: center;
 }
 .top-user-video button {
   width: 60px;
@@ -65,5 +80,19 @@ export default {
   margin-top: 20%;
   border-radius: 50%;
   border: 1px solid #f0f0f0;
+}
+
+.login,.user {
+  margin-top: -4.5em;
+  margin-right: 4em;
+}
+@media (max-width: 767px) {
+  .login,.user {
+    margin-right: 2em;
+    margin-top: -4.1em;
+  }
+  .titleSpan {
+    margin-left: -0.7em;
+  }
 }
 </style>

@@ -68,11 +68,11 @@ export default {
   height: 300px;
 }
 .login {
-  margin-top: .4em;
+  margin-top: 0.4em;
   margin-right: 2em;
 }
 .el-dropdown {
-  margin: .2em 0 0 1em;
+  margin: 0.2em 0 0 1em;
   float: left;
   color: #fff;
   cursor: pointer;

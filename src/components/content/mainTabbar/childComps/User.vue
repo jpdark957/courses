@@ -1,69 +1,69 @@
 <template>
-    <div class="user">
-        <el-dropdown @command="handleCommand">
+  <div class="user">
+    <el-dropdown @command="handleCommand">
       <span class="el-dropdown-link">
         <el-avatar :size="30" :src="userIcon"></el-avatar>
       </span>
-            <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-user-solid" command="me">个人中心</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-star-on">我的收藏</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-switch-button" command="logout" divided>注销</el-dropdown-item>
-            </el-dropdown-menu>
-        </el-dropdown>
-    </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item icon="el-icon-user-solid" command="me">个人中心</el-dropdown-item>
+        <el-dropdown-item icon="el-icon-star-on">我的收藏</el-dropdown-item>
+        <el-dropdown-item icon="el-icon-switch-button" command="logout" divided>注销</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </div>
 </template>
 
 <script>
-    import {logout} from "../../../../network/login";
-    export default {
-        name: "User",
-        data(){
-            return {
-            }
-        },
-        methods:{
-            logout(){
-                logout()
-                this.$message({ message: "注销成功", type: 'success' })
-                this.$store.commit('LOGOUT')
-                this.$router.push('/home')
-            },
-            handleCommand(command) {
-                command=="logout" && this.logout()
-                command=="me" && this.me()
-            },
-            me(){
-                this.$router.push('/me')
-            }
-        },
-        computed:{
-            userIcon(){
-                if(this.$store.state.user.userIcon){
-                    return  this.$store.state.user.userIcon
-                }else {
-                return "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-                }
-            }
-        }
+import { logout } from "../../../../network/login";
+export default {
+  name: "User",
+  data() {
+    return {};
+  },
+  methods: {
+    logout() {
+      logout();
+      this.$message({ message: "注销成功", type: "success" });
+      this.$store.commit("LOGOUT");
+    //   this.$router.push("/home");
+      this.$router.push(this.$route.path);
+    },
+    handleCommand(command) {
+      command == "logout" && this.logout();
+      command == "me" && this.me();
+    },
+    me() {
+      this.$router.push("/me");
     }
+  },
+  computed: {
+    userIcon() {
+      if (this.$store.state.user.userIcon) {
+        return this.$store.state.user.userIcon;
+      } else {
+        return "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png";
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
-.user{
-    margin-right: 11%;
-    text-align: right;
+.user {
+  margin-right: 11%;
+  text-align: right;
 }
 .el-dropdown-link {
-    cursor: pointer;
-    color: #409EFF;
+  cursor: pointer;
+  color: #409eff;
 }
 .el-icon-arrow-down {
-    font-size: 12px;
+  font-size: 12px;
 }
 .demonstration {
-    display: block;
-    color: #8492a6;
-    font-size: 14px;
-    margin-bottom: 20px;
+  display: block;
+  color: #8492a6;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 </style>
