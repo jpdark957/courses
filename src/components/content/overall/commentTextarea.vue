@@ -11,7 +11,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="4" :offset="1" :xs="{span: 4, offset: 0}">
-        <el-button size="mini" type="primary">
+        <el-button size="mini" type="primary" @click="submit">
           <i class="el-icon-edit-outline el-icon--left"></i>发表
         </el-button>
       </el-col>
@@ -21,10 +21,15 @@
 
 <script>
 export default {
-  name: 'commentTextarea',
+  name: "commentTextarea",
   props: {
     form: {
       desc: null
+    }
+  },
+  methods: {
+    submit() {
+      this.$emit("submit");
     }
   }
 };

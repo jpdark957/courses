@@ -7,6 +7,7 @@
       :key="index"
       v-show="isShow(index)"
     >
+    {{data.content}}
       <el-col :span="24" class="comConBox">
         <el-card class="comCon">
           <!-- 讨论数量计算 -->

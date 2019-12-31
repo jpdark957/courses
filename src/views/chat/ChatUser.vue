@@ -66,9 +66,7 @@
             tosendOneWebSocket(){
                 let text=this.textarea
                 let id=this.touser
-                sendOneWebSocket(id,text).then(res=>{
-                    console.log(res)
-                })
+                sendOneWebSocket(id,text)
                 const log = {
                     "userIocn": this.$store.state.user.userIcon,
                     "cltext": this.textarea,
@@ -81,13 +79,11 @@
             tochatlog(touser){
 
                 chatlog(touser).then(res=>{
-                    console.log(res)
                     this.chatlogList=  res.data
                 })
             },
             toappuser(){
                 appuser().then(res=>{
-                    console.log(res)
                     this.appuser=res.data
                 })
             },
@@ -138,7 +134,7 @@
         mounted() {
             window.onbeforeunload = this.closeWebSocket;
             this.websocket = new WebSocket(
-                "ws://127.0.0.1:8888/linux/websocket/"+this.$store.state.user.userId
+                "ws://117.50.11.169:8888/linux/websocket/"+this.$store.state.user.userId
             )
             this.initWebSocket();
             this.tochatlog(1);

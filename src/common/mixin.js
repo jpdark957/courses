@@ -16,16 +16,40 @@ export const wRoute = {
 export const inDetail = {
   data() {
     return {
-      
+
     }
   },
   methods: {
-    itemClick(index) {
-      if(this.vData[this.sActive]) 
-        this.$router.push(this.$route.path + '/' + this.vData[this.sActive][index].id)
-      else 
-        this.$router.push(this.$route.path + '/' + this.vData[index].id)
-      
+    itemClick(index, item) {
+      if (this.$route.path == '/teachVideo') {
+        let videoId = this.vData[this.sActive][index].videoId
+        let videoName = this.vData[this.sActive][index].videoTitle
+        this.$router.push({
+          path: this.$route.path + '/' + this.vData[this.sActive][index].videoId,
+          query: {
+            videoId,
+            videoName
+          }
+        })
+      }
+      else if (this.$route.path == '/discussion') {
+        let discussion = item;
+        let currentPage = this.currentPage;
+        this.$router.push({
+          path: this.$route.path + "/" + item.qid,
+          query: {
+            discussion,
+            currentPage
+          }
+        });
+      }
+
+      // if(this.vData[this.sActive]) 
+      //   this.$router.push(this.$route.path + '/' + this.vData[this.sActive][index].id)
+      // else 
+      //   this.$router.push(this.$route.path + '/' + this.vData[index].id)
+      // else
+      //   this.$router.push(this.$route.path + '/' + this.content[index].qid) 
     }
   }
 }
@@ -36,27 +60,27 @@ export const TabRoute = {
       navData: [
         {
           liCon: "首页",
-          icon:"el-icon-s-home",
+          icon: "el-icon-s-home",
           liPath: "/home"
         },
         {
           liCon: "教学视频",
-          icon:"el-icon-video-camera",
+          icon: "el-icon-video-camera",
           liPath: "/teachVideo"
         },
         {
           liCon: "教学资料",
           liPath: "/teachData",
-          icon:"el-icon-tickets",
+          icon: "el-icon-tickets",
         },
         {
           liCon: "课程讨论",
-          icon:"el-icon-chat-dot-square",
+          icon: "el-icon-chat-dot-square",
           liPath: "/discussion"
         },
         {
           liCon: "教学反馈",
-          icon:"el-icon-chat-line-square",
+          icon: "el-icon-chat-line-square",
           liPath: "/comment"
         }
       ]

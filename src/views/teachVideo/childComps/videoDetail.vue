@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div v-if="this.commentData && this.vListCon">
     <el-row :type="flex" :justify="end">
-      <el-col :span="12" :offset="3" :xs="{span: 24, offset: 0, push: 0, class: sss}" >
-        <video src="~assets/video/aaa.mp4" controls></video>
+      <el-col :span="12" :offset="3" :xs="{span: 24, offset: 0, push: 0, class: sss}">
+        <video :src="nowUrl" controls></video>
       </el-col>
       <el-col :span="4" class="videoList" :push="1" :xs="{span: 24, offset: 0, push: 0}">
         <el-col :span="24" class="listHeader">
@@ -10,129 +10,110 @@
           <span>{{this.sActive+1}}/{{this.comLength}}</span>
         </el-col>
         <el-col :span="24" class="listDetail">
-          <ul class="listUl">
-            <li v-for="(item, index) in vListCon" :key="index" class="listLi" :class="{active: sActive === index}" @click="active(index)">
-              <span>{{item.vConName}}</span>
+          <ul class="listUl" v-if="vListCon.length != 0">
+            <li
+              v-for="(item, index) in vListCon"
+              :key="index"
+              class="listLi"
+              :class="{active: sActive === index}"
+              @click="active(item,index)"
+            >
+              <span>P{{index+1}} {{item.viTitle}}</span>
               <span>{{item.vConTime}}</span>
             </li>
           </ul>
+          <ul v-else class="ListNull">暂无更多视频选集</ul>
         </el-col>
       </el-col>
     </el-row>
 
-  <detail-comment />
-
-
-
-
-
+    <detail-comment
+      :commentData="commentData"
+      ref="detailComment"
+      @submit="submit"
+      v-if="this.commentData != 0"
+    />
+    <el-col :span="12" :offset="3" :xs="{span: 24, offset: 0, push: 0}" v-else>
+      <el-card class="nullbox">
+        <p class="null">暂无更多讨论</p>
+        <comment-textarea ref="textarea" @submit="submit" :form="form" />
+      </el-card>
+    </el-col>
   </div>
 </template>
 
 <script>
-import detailComment from './detailComment'
+import detailComment from "./detailComment";
+import { videoDetail, videoComment, videoCommentAdd } from "network/video";
+import commentTextarea from "components/content/overall/commentTextarea"; //输入框
+
+// videoCommentAdd
 export default {
   name: "videoDetail",
+  inject: ["reload"],
+
   data() {
     return {
       nowVideo: 0,
-      vListCon: [
-        {
-          vConName: '1.1 Linux系统简介-UNIX发展历史和发行版本',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '1.2 Linux系统简介-Linux发展历史和发行版本',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '1.3 Linux系统简介-Linux应用领域-开源软件简介',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '1.4 Linux系统简介-Linux学习方法',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '2.1 Linux系统安装-VMware虚拟机安装与使用',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '2.2 Linux系统安装-系统分区',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '2.3 Linux系统安装-Linux系统安装',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '2.4 Linux系统安装-远程登录管理工具',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '3.1 给初学者的建议-注意事项',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '3.2 给初学者的建议-服务器管理和维护建议',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.1.1 Linux常用命令-文件处理命令-命令格式与目录处理命令ls',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.1.2 Linux常用命令-文件处理命令-目录处理命令',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.1.3 Linux常用命令-文件处理命令-文件处理命令',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.1.4 Linux常用命令-文件处理命令-链接命令',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.2.1 Linux常用命令-权限管理命令-权限管理命令chmod',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.2.2 Linux常用命令-权限管理命令-其他权限管理命令',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.3.1 Linux常用命令-文件搜索命令-文件搜索命令find',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.3.2 Linux常用命令-文件搜索命令-其他文件搜索命令',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.4 Linux常用命令-文件搜索命令-帮助命令',
-          vConTime: '09:41'
-        },
-        {
-          vConName: '4.5 Linux常用命令-文件搜索命令-用户管理命令',
-          vConTime: '09:41'
-        },
-      ],
+      vListCon: [],
       sActive: 0,
-    }
+      commentData: [],
+      form: {
+        desc: ""
+      },
+      nowUrl: ""
+    };
   },
   components: {
-    detailComment
+    detailComment,
+    commentTextarea
+  },
+  created() {
+    this.videoDetail(this.$route.query.videoId);
+    this.videoComment(this.$route.query.videoId);
+  },
+  mounted() {
+    this.videoDetail(this.$route.query.videoId);
+    this.videoComment(this.$route.query.videoId);
   },
   methods: {
-    active(index) {
-      this.sActive = index 
+    active(item, index) {
+      this.sActive = index;
+      this.nowVideo = index;
+      this.nowUrl = item.viUrl;
+    },
+    videoDetail(videoId) {
+      videoDetail(videoId).then(res => {
+        this.vListCon = res.data;
+        this.nowUrl = res.data[0].viUrl;
+      });
+    },
+    videoComment(parentId) {
+      videoComment(parentId).then(res => {
+        this.commentData = res.data;
+        this.commentData.content = res.data.vcContent;
+      });
+    },
+    submit() {
+      if (this.form.desc == "") {
+        this.form.desc = this.$refs.detailComment.form.desc;
+      }
+      videoCommentAdd(this.$route.query.videoId, this.form.desc).then(res => {
+        if (res.code == 0) {
+          this.form.desc = "";
+          this.$message({ message: "发表成功", type: "success" });
+          this.$emit("success");
+          setTimeout(this.reload(), 5000);
+        } else {
+          this.$message({ message: "发表失败", type: "error" });
+        }
+      });
     }
   },
   computed: {
-   comLength() {
-     return this.vListCon.length
-   }
+    comLength() {
+      return this.vListCon.length;
+    }
   }
 };
 </script>
@@ -151,7 +132,7 @@ video {
 
 .videoList {
   height: 30vmax;
-  background-color: rgba(209,209,209,.5);
+  background-color: rgba(209, 209, 209, 0.5);
 }
 
 .listHeader {
@@ -160,16 +141,16 @@ video {
   margin-bottom: 2%;
   /* position:fixed; */
 }
-.listHeader>span:first-child {
+.listHeader > span:first-child {
   padding-left: 1em;
 }
-.listHeader>span:last-child {
+.listHeader > span:last-child {
   color: #999999;
   font-size: 12px;
   float: right;
   text-align: center;
   padding-right: 1em;
-  padding-top: .2em;
+  padding-top: 0.2em;
 }
 .listUl {
   overflow: auto;
@@ -184,8 +165,7 @@ video {
   }
 }
 
-
-@media (min-width: 420px) and (max-width: 768px){
+@media (min-width: 420px) and (max-width: 768px) {
   video {
     height: 50vmax;
     transition: 1s;
@@ -197,7 +177,7 @@ video {
     transition: 1s;
   }
 }
-@media (max-width: 768px){
+@media (max-width: 768px) {
   .listUl {
     height: 22vmax;
     transition: 1s;
@@ -205,12 +185,10 @@ video {
   .el-row {
     margin-top: 0em;
   }
-
 }
 ::-webkit-scrollbar {
   width: 0 !important;
-} 
-
+}
 
 .listLi {
   cursor: pointer;
@@ -219,95 +197,44 @@ video {
   border-radius: 5px 5px;
 }
 .listLi:hover {
-  background-color: rgba(255,255,255,.2);
+  background-color: rgba(255, 255, 255, 0.2);
   color: var(--color-main);
   font-weight: 500;
 }
-.listLi>span:first-child {
+.listLi > span:first-child {
   width: 70%;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
   float: left;
   padding-left: 2%;
 }
-.listLi>span:last-child {
+.listLi > span:last-child {
   width: 15%;
   float: right;
   font-weight: bolder;
 }
 
 .active {
-  background-color: rgba(255,255,255,.5);
+  background-color: rgba(255, 255, 255, 0.5);
   color: var(--color-main);
   font-weight: bolder;
 }
 
-/* .vDetail {
-  width: 100%;
-  height: 697px;
+.null {
+  margin: 2em 0;
+  text-align: center;
+  color: rgb(142, 142, 142);
+  font-size: 16px;
 }
-video {
-  width: 75%;
-  height: 697px;
-  padding: 0 2%;
-  background-color: black;
-  outline: none;
-  float: left;
+.ListNull {
+  font-size: 16px;
+  text-align: center;
+  line-height: 25vh;
+  color: rgb(153, 153, 153);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-
-.videoList {
-  width: 21%;
-  height: 100%;
-  float: left;
-}
-.videoList ul {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  list-style: none;
-}
-
-::-webkit-scrollbar {
-  width: 0 !important;
-} 
-
-ul li {
-  width: 100%;
-  height: 9%;
-  margin-bottom: 2%; 
-  border: 1px solid #bfbfbf;
-  background-color: #fff;
-  border-top: none;
-  cursor: pointer;
-  color: #8a8a8a;
-  font-family: 'Microsoft YaHei';
-}
-li:hover {
-  background-color: #e9e9e9;
-  color: var(--color-main)
-}
-li img {
-  width: 28px;
-  height: 28px;
-  padding: 4% 3% 0 3% ;
-  float: left;
-}
-li p {
-  font-size: 14px;
-  padding-top: 5%;
-}
-.vName {
-  width: 60%;
-  float: left;
-
-  overflow: hidden;
-  text-overflow:ellipsis;
-  white-space: nowrap;
-}
-.vTime {
-  width: 15%;
-  padding-right: 4%;
-  float: right;
-} */
- </style>
+</style>

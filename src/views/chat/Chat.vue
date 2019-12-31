@@ -182,7 +182,7 @@
             window.onbeforeunload = this.closeWebSocket;
 
             this.websocket = new WebSocket(
-                "ws://127.0.0.1:8888/linux/websocket/"+this.$store.state.user.userId
+                "ws://117.50.11.169:8888/linux/websocket/"+this.$store.state.user.userId
             )
             this.initWebSocket();
 

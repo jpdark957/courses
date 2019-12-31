@@ -2,215 +2,157 @@
   <el-row>
     <!-- 移动端tab栏 -->
     <el-col class="hidden-sm-and-up">
-      <el-tabs type="border-card">
-        <el-tab-pane v-for="(item, index) in dList" :key="index" :label="item" />
+      <el-tabs type="border-card" @tab-click="phoneTab">
+        <el-tab-pane label="全部资源" />
+        <el-tab-pane v-for="(item, index) in dList" :key="index" :label="item.rtTitle" />
       </el-tabs>
     </el-col>
     <!-- PC端tab栏 -->
-    <el-col :span="4" :offset="2" :xs="{span: 24, offset: 0}" class="hidden-xs-only">
-      <el-card class="box-card" v-for="(item, index) in dList" :key="index">{{item}}</el-card>
+    <el-col :span="3" :offset="2" :xs="{span: 24, offset: 0}" class="hidden-xs-only">
+      <el-card class="box-card box-card1" @click.native="overTab">全部资源</el-card>
+      <el-card
+        class="box-card "
+        v-for="(item, index) in dList"
+        :key="index"
+        @click.native="tabType(item)"
+      >{{item.rtTitle}}</el-card>
     </el-col>
-    <!-- 内容 -->
-    <el-col :span="14" :offset="0" :sm="{span: 17}" :xs="{span: 24}">
-      <el-col v-for="(item, index) in vData" :key="index" class="dataCon">
-        <!-- 资料图片 -->
-        <el-col
-          :span="2"
-          class="imgCon"
-          :xs="{span: 5, offset: 1}"
-          :sm="{span: 4}"
-          :offset="1"
-          @click.native="itemClick(index)"
-        >
-          <img :src="item.vImage" alt />
-        </el-col>
-        <!-- 资料内容 -->
-        <el-col
-          :xs="{span: 16}"
-          :sm="{span: 12}"
-          :md="{span: 13}"
-          :lg="{span: 13}"
-          class="textCon"
-          :offset="1"
-        >
-          <h2 @click="itemClick(index)">{{item.dataTitle}}</h2>
-          <el-col :span="24">
-            <span>
-              <i class="el-icon-film el-icon--left"></i>视频地址：
-              <span class="videoRou">{{item.vTit}}</span>
-            </span>
-          </el-col>
-          <el-col :span="24" class="textDetail">
-            <span>
-              <i class="el-icon-time el-icon--left"></i>
-              {{item.dTime}}
-            </span>
-            <span>
-              <i class="el-icon-thumb el-icon--left"></i>
-              {{item.dColl}}
-            </span>
-          </el-col>
-        </el-col>
-        <!-- 资料按钮 -->
-        <el-col
-          :span="3"
-          class="btnCon"
-          :offset="1"
-          :xs="{span: 0, offset: 0}"
-          :sm="{span: 2, offset: 0}"
-          :md="{span: 3 ,offset: 0}"
-          :lg="{span: 3 ,offset: 1}"
-        >
-          <el-button type="primary" @click="itemClick(index)">
-            查看全部
-            <i class="el-icon-folder-opened el-icon--right"></i>
-          </el-button>
-        </el-col>
-      </el-col>
+
+    <el-col :span="16" :xs="{span: 24, offset: 0}">
+      <el-card>
+        <div slot="header" class="clearfix">
+          <span>卡片名称</span>
+        </div>
+
+        <div class="text item">
+          <el-table :data="vData" style="width: 100%" @row-click="cllick">
+            <el-table-column prop="resTitle" label="文件名"></el-table-column>
+            <el-table-column label="上传时间" width="200">
+              <template slot-scope="scope">{{scope.row.createtime | showDate}}</template>
+            </el-table-column>
+            <el-table-column prop="viewNum" label="查看次数" width="120"></el-table-column>
+            <el-table-column label="操作" width="198">
+              <template slot-scope="scope">
+                <el-button type="primary" @click.stop.prevent="detail(scope.$index,scope.row)">查看</el-button>
+                <!-- <el-button type="primary"  @click.stop.prevent="deleteRow(scope.$index, tableData)">下载</el-button> -->
+                <el-button type="primary" @click="downLoad(scope.row)">下载文件</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-card>
     </el-col>
+
+    <el-col>
+      <div class="page">
+        <elpagination @currentChange="currentChange" :PageInfo="PageInfo" />
+      </div>
+    </el-col>
+
+    <el-dialog title="提示" :visible.sync="centerDialogVisible" width="80%" center>
+      <span>{{resContent}}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="downLoad">下载文件</el-button>
+      </span>
+    </el-dialog>
   </el-row>
 </template>
 
 <script>
-import { inDetail } from "common/mixin";
+import { formatDate } from "common/utils";
+import Elpagination from "components/common/element/Elpagination";
+import { teachDataList, teachDataType, dataByRtId } from "network/teachData";
+import { PageInfo } from "common/utils";
+
 export default {
   name: "detaMain",
   data() {
     return {
-      dList: ["教学课件", "教学视频", "教学方案", "教学日历", "教学标准"],
-      vData: [
-        {
-          id: "g1tg23",
-          vImage: require("assets/img/test/test1.jpg"),
-          dataTitle: "2019最全Linux系统教学视频配套课件",
-          vTit: "2019最全Linux系统全套视频",
-          dTime: "2019-12-12 17:54",
-          dColl: 4532
-        },
-        {
-          id: "15dg32",
-          vImage: require("assets/img/test/test2.jpg"),
-          dataTitle: "虹猫蓝兔七侠传2006 (1-108)",
-          vTit: "虹猫蓝兔七侠传2006 (1-108)",
-          dTime: "2019-10-15 10:52",
-          dColl: 786
-        },
-        {
-          id: "gbh236",
-          vImage: require("assets/img/test/test3.jpg"),
-          dataTitle: "陶瓷艺术鉴赏与制作",
-          vTit: "陶瓷艺术鉴赏与制作",
-          dTime: "2019-05-16 06:13",
-          dColl: 3453
-        },
-        {
-          id: "g35f2",
-          vImage: require("assets/img/test/test4.jpg"),
-          dataTitle: "薪火传承·中国传统哲学通论",
-          vTit: "薪火传承·中国传统哲学通论",
-          dTime: "2019-11-11 11:11",
-          dColl: 86
-        },
-        {
-          id: "yh5682",
-          vImage: require("assets/img/test/test1.jpg"),
-          dataTitle: "2019最全Linux系统教学视频配套课件",
-          vTit: "2019最全Linux系统全套视频",
-          dTime: "2019-12-12 17:54",
-          dColl: 4532
-        },
-        {
-          id: "y1ts12",
-          vImage: require("assets/img/test/test2.jpg"),
-          dataTitle: "虹猫蓝兔七侠传2006 (1-108)",
-          vTit: "虹猫蓝兔七侠传2006 (1-108)",
-          dTime: "2019-10-15 10:52",
-          dColl: 786
-        },
-        {
-          id: "1s6df",
-          vImage: require("assets/img/test/test3.jpg"),
-          dataTitle: "陶瓷艺术鉴赏与制作",
-          vTit: "陶瓷艺术鉴赏与制作",
-          dTime: "2019-05-16 06:13",
-          dColl: 3453
-        },
-        {
-          id: "f48g3",
-          vImage: require("assets/img/test/test4.jpg"),
-          dataTitle: "薪火传承·中国传统哲学通论",
-          vTit: "薪火传承·中国传统哲学通论",
-          dTime: "2019-11-11 11:11",
-          dColl: 86
-        },
-        {
-          id: "dfg36s",
-          vImage: require("assets/img/test/test1.jpg"),
-          dataTitle: "2019最全Linux系统教学视频配套课件",
-          vTit: "2019最全Linux系统全套视频",
-          dTime: "2019-12-12 17:54",
-          dColl: 4532
-        },
-        {
-          id: "as53f2",
-          vImage: require("assets/img/test/test2.jpg"),
-          dataTitle: "虹猫蓝兔七侠传2006 (1-108)",
-          vTit: "虹猫蓝兔七侠传2006 (1-108)",
-          dTime: "2019-10-15 10:52",
-          dColl: 786
-        },
-        {
-          id: "g1tg23",
-          vImage: require("assets/img/test/test3.jpg"),
-          dataTitle: "陶瓷艺术鉴赏与制作",
-          vTit: "陶瓷艺术鉴赏与制作",
-          dTime: "2019-05-16 06:13",
-          dColl: 3453
-        },
-        {
-          id: "g1tg23",
-          vImage: require("assets/img/test/test4.jpg"),
-          dataTitle: "薪火传承·中国传统哲学通论",
-          vTit: "薪火传承·中国传统哲学通论",
-          dTime: "2019-11-11 11:11",
-          dColl: 86
-        },
-        {
-          id: "g1tg23",
-          vImage: require("assets/img/test/test1.jpg"),
-          dataTitle: "2019最全Linux系统教学视频配套课件",
-          vTit: "2019最全Linux系统全套视频",
-          dTime: "2019-12-12 17:54",
-          dColl: 4532
-        },
-        {
-          id: "g1tg23",
-          vImage: require("assets/img/test/test2.jpg"),
-          dataTitle: "虹猫蓝兔七侠传2006 (1-108)",
-          vTit: "虹猫蓝兔七侠传2006 (1-108)",
-          dTime: "2019-10-15 10:52",
-          dColl: 786
-        },
-        {
-          id: "g1tg23",
-          vImage: require("assets/img/test/test3.jpg"),
-          dataTitle: "陶瓷艺术鉴赏与制作",
-          vTit: "陶瓷艺术鉴赏与制作",
-          dTime: "2019-05-16 06:13",
-          dColl: 3453
-        },
-        {
-          id: "g1tg23",
-          vImage: require("assets/img/test/test4.jpg"),
-          dataTitle: "薪火传承·中国传统哲学通论",
-          vTit: "薪火传承·中国传统哲学通论",
-          dTime: "2019-11-11 11:11",
-          dColl: 86
-        }
-      ]
+      centerDialogVisible: false,
+      dList: [],
+      vData: [],
+      currentPage: 1,
+      pageSize: 10,
+      PageInfo,
+      tab: 0,
+      resContent: ""
     };
   },
-  mixins: [inDetail]
+  components: {
+    Elpagination
+  },
+  created() {
+    // this.teachDataList(this.currentPage, this.pageSize);
+    this.teachDataType(this.currentPage, this.pageSize);
+  },
+  mounted() {
+    this.teachDataList(this.currentPage, this.pageSize);
+  },
+  methods: {
+    teachDataList(currentPage, pageSize) {
+      teachDataList(currentPage, pageSize).then(res => {
+        this.vData = res.data.content;
+      });
+    },
+    teachDataType(currentPage, pageSize) {
+      teachDataType(currentPage, pageSize).then(res => {
+        let currentPage = this.currentPage;
+        let pageSize = res.data.size;
+        let total = res.data.totalElements;
+        this.PageInfo = new PageInfo(currentPage, pageSize, total);
+        this.dList = res.data.content;
+      });
+    },
+    currentChange(value) {
+      this.currentPage = value;
+      this.teachDataList(this.currentPage, this.pageSize);
+    },
+    detail(index,row) {
+      this.vData[index].viewNum = this.vData[index].viewNum+1
+      this.centerDialogVisible = true;
+      this.resContent = row.resContent;
+    },
+    downLoad(row) {
+      this.$message({ type: "warning", message: "暂不支持pdf、图片下载" });
+      let url = row.resUrl;
+      window.open(url);
+      // dataDownLoad(row.resUrl).then(res => {
+      //   console.log(res)
+      // });
+    },
+    tabType(item) {
+      dataByRtId(item.rtId).then(res => {
+        this.vData = res.data;
+      });
+    },
+    phoneTab(tab) {
+      if (tab.label != "全部资源") {
+        for (let i = 0; i < this.dList.length; i++) {
+          if (this.dList[i].rtTitle == tab.label) {
+            dataByRtId(this.dList[i].rtId).then(res => {
+              this.vData = res.data;
+            });
+          }
+        }
+      } else {
+        teachDataList(this.currentPage, this.pageSize).then(res => {
+          this.vData = res.data.content;
+        });
+      }
+    },
+    overTab() {
+      teachDataList(this.currentPage, this.pageSize).then(res => {
+        this.vData = res.data.content;
+      });
+    }
+  },
+  filters: {
+    showDate: value => {
+      let date = new Date(value);
+      return formatDate(date, "yyyy-MM-dd hh:mm:ss");
+    }
+  }
 };
 </script>
 
@@ -220,93 +162,30 @@ export default {
   margin-top: 2vh;
 }
 
-.dataCon {
-  height: 18vh;
-  background-color: #fff;
-  border-top: 1px dotted rgba(209, 209, 209, 0.8);
-}
-.dataCon:hover {
-  border: 1px solid #4b98ff;
+.el-row > .el-col:nth-child(2) {
+  margin-right: 2em;
 }
 
-.imgCon {
-  height: 14vh;
-  margin-top: 2vh;
-  box-shadow: -1px 0px 2px rgba(209, 209, 209, 0.8);
-  border-radius: 5px;
-}
-.imgCon > img {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.imgCon > img:hover {
-  opacity: 75%;
-  transition: 0.2s;
-}
-.textCon {
-  height: 14vh;
-  /* background-color: green; */
-  margin-top: 2vh;
-}
-.textCon > h2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-h2 {
-  margin-top: 0.8em;
-  cursor: pointer;
-}
-h2:hover {
-  color: var(--color-main);
-}
-.textCon > .el-col {
-  margin-left: 0.5em;
-  margin-top: 2em;
-  color: rgba(153, 153, 153, 1);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.btnCon {
-  margin-top: 8vh;
-  /* background-color: red; */
-}
-.dList {
-  display: none;
-}
-@media (max-width: 768px) {
-  h2 {
-    font-size: 14px;
-  }
-  .textCon > .el-col {
-    margin-left: 0em;
-    margin-top: 0.5em;
-    font-size: 12px;
-  }
-  .dList {
-    display: block;
-  }
-
-}
-
-.el-card {
+.box-card {
   text-align: center;
   font-size: 14px;
   color: rgb(102, 102, 102);
   cursor: pointer;
 }
-.el-card:hover {
+
+.box-card:hover {
   color: rgb(64, 158, 255);
   box-shadow: 0px 0px 10px rgb(64, 158, 255);
 }
-.el-row > .el-col:nth-child(2) {
-  margin-right: 2em;
+.box-card1:hover {
+  color: #fff;
 }
-.el-tabs {
-  border-bottom: none;
+.box-card1 {
+  background-color: rgb(64, 158, 255);
+  color: #fff;
+}
+.page {
+  margin: 20px 0 10px;
+  text-align: center;
 }
 </style>

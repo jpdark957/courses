@@ -52,3 +52,14 @@ export function add(user) {
     })
 }
 
+export function updatePassword(mail,code,pass) {
+    return request({
+        method: 'put',
+        url: '/user/mail',
+        params: {
+            mail,
+            code,
+            pass
+        }
+    })
+}
