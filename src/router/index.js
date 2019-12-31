@@ -8,6 +8,7 @@ const Comment = () => import('@/views/comment/Comment')
 const TeachData = () => import('@/views/teachData/TeachData')
 const dataDetail = () => import('@/views/teachData/childComps/dataDetail')
 const discussion = () => import('@/views/courseDiscussion/discussion')
+const discussionDetail = () => import('@/views/courseDiscussion/childComps/discussionDetail')
 const Me = () => import('@/views/me/Me')
 
 //安装插件
@@ -49,7 +50,12 @@ const routes = [
   },
   {
     path: '/discussion',
-    component: discussion
+    component: discussion,
+  },
+  {
+    path: '/discussion/:id',
+    name: 'discussionDetail',
+    component: discussionDetail,
   },
 ]
 

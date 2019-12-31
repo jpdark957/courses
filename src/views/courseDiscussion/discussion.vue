@@ -1,20 +1,11 @@
 <template>
-  <el-row>
-    <el-col 
-      :span="16" 
-      :offset="4" 
-      :xs="{span: 24, offset: 0}"
-      :sm="{span: 20, offset: 2}"
-      :md="{span: 20, offset: 2}"
-      :lg="{span: 16, offset: 4}"
-      >
-      <comment :commentData="commentData" />
-    </el-col>
-  </el-row>
+  <discussion-main  @discussionList="discussionList"/>
+  <!-- :content="content" :PageInfo="PageInfo" :currentPage="currentPage" :pageSize="pageSize" -->
 </template>
 
 <script>
-import Comment from "components/content/comment/Comment";
+import discussionMain from "./childComps/discussionMain";
+
 export default {
   name: "discussion",
   data() {
@@ -136,14 +127,16 @@ export default {
               }
             ]
           }
-        ],
-        
-      ]
+        ]
+      ],
+
     };
   },
   components: {
-    Comment
-  }
+    discussionMain
+  },
+
+ 
 };
 </script>
 

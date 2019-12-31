@@ -7,7 +7,6 @@
       :key="index"
       v-show="isShow(index)"
     >
-    {{data.content}}
       <el-col :span="24" class="comConBox">
         <el-card class="comCon">
           <!-- 讨论数量计算 -->
@@ -15,10 +14,11 @@
             <span>{{comNum}}</span>个讨论
           </p>
           <!-- 输入框 -->
-          <comment-textarea :form="form" />
+          <comment-textarea ref="textarea" :form="form" @submit="submit"/>
 
-          <el-row v-for="(item, index) in data" :key="index" class="OneCommentBox">
+          <el-row v-for="(item, index) in commentData" :key="index" class="OneCommentBox">
             <!-- 一级评论 -->
+            <!-- {{item}} -->
             <el-col
               :xs="{span: 4, offset: 0}"
               :sm="{span: 4, offset: 1}"
@@ -26,23 +26,25 @@
               :lg="{span:2, offset: 1}"
               :span="2"
             >
-              <img src="~assets/img/test/test1.jpg" alt />
+              <img :src="item.user.userIcon" alt />
             </el-col>
             <el-col :span="22" :xs="20" :sm="{span: 19}">
               <div class="conDetail">
-                <p>{{item.username}}</p>
+                <p>{{item.user.userNickname}}</p>
                 <p>{{item.content}}</p>
+                <p>{{item.vcContent}}</p>
+                <!-- <p v-if="this.$route.path == '/teachVideo/'">{{item.content}}</p> -->
                 <p>
-                  {{item.date}}
+                  {{item.createtime | showDate}}
                   <span @click="openInput">回复</span>
                 </p>
                 <!-- 一级评论结束点 -->
               </div>
 
               <!-- 二级评论框 -->
-              <el-col v-for="(item2, index2) in item.secondLevelData" :key="index2">
-                <!-- 二级评论 -->
-                <el-col
+              <!-- <el-col v-for="(item2, index2) in item.secondLevelData" :key="index2"> -->
+              <!-- 二级评论 -->
+              <!-- <el-col
                   :xs="{span: 4, offset: 0}"
                   :sm="{span: 4, offset: 0}"
                   :md="{span: 3, offset: 0}"
@@ -59,14 +61,14 @@
                       {{item.date}}
                       <span @click="openInput">回复</span>
                     </p>
-                  </div>
-                  <!-- 二级评论结束点 -->
-                </el-col>
-                <!-- 二级评论框结束点 -->
-              </el-col>
+              </div>-->
+              <!-- 二级评论结束点 -->
+              <!-- </el-col> -->
+              <!-- 二级评论框结束点 -->
+              <!-- </el-col> -->
 
               <!-- 二级输入框 -->
-              <comment-textarea :form="form" v-show="isClick" />
+              <!-- <comment-textarea :form="form" v-show="isClick" /> -->
             </el-col>
           </el-row>
         </el-card>
@@ -77,10 +79,12 @@
 
 <script>
 import commentTextarea from "components/content/overall/commentTextarea"; //输入框
+import { formatDate } from "common/utils";
+
 import { sortByKey } from "common/computed";
 
 export default {
-  name: "Comment",
+  name: "Comment1",
   components: {
     commentTextarea
   },
@@ -111,21 +115,31 @@ export default {
       if (index === this.sActive) return true; //判断显示哪部分视频
     },
     openInput() {
-      this.isClick = !this.isClick//输入框
+      this.isClick = !this.isClick; //输入框
+    },
+    submit() {
+      this.form.desc = this.$refs.textarea[0].form.desc
+      this.$emit("submit");
     }
   },
   computed: {
     comNum: function() {
       //计算讨论数量
-      return this.commentData[0].length;
+      return this.commentData.length;
     }
   },
   mounted() {
     //计算热度
-    sortByKey(this.commentData[0], "secondLevelData");
+    sortByKey(this.commentData, "secondLevelData");
   },
   beforeUpdate() {
-    sortByKey(this.commentData[0], "secondLevelData");
+    sortByKey(this.commentData, "secondLevelData");
+  },
+  filters: {
+    showDate: value => {
+      let date = new Date(value);
+      return formatDate(date, "yyyy-MM-dd hh:mm:ss");
+    }
   }
 };
 </script>

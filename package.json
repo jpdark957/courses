@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "D": "^1.0.0",
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
     "core-js": "^3.3.2",
@@ -17,6 +18,7 @@
     "qs": "^6.9.1",
     "vue": "^2.6.10",
     "vue-editor-md3": "^1.1.1",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.1.2",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.7.0"

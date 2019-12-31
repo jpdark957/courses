@@ -2,41 +2,46 @@
   <div>
     <el-row>
       <el-col :span="18" :offset="3" :xs="{span: 24, offset: 0}">
-        <el-col :xs="{span: 12 , offset: 6}" class="eltab" >
-          <eltabs :eltabs="eltabs" @handleClick="handleClick"/>
+        <el-col :xs="{span: 12 , offset: 6}" class="eltab">
+          <eltabs :eltabs="eltabs" @handleClick="handleClick" />
         </el-col>
       </el-col>
-
     </el-row>
     <el-row :gutter="60">
-      <el-col :span="21" :offset="1" v-for="(vctent, index2) in vData" :key="index2" :xs="{span: 24, offset: 0}">
+      <el-col
+        :span="21"
+        :offset="1"
+        v-for="(vCon, index2) in vData"
+        :key="index2"
+        :xs="{span: 24, offset: 0}"
+      >
         <el-col
           :span="5"
           :offset="1"
-          v-for="(item, index) in vctent"
+          v-for="(item, index) in vCon"
           :key="index"
           class="vContent"
-          v-show="isShow(index2)" 
-          :v-model="vctent"
+          v-show="isShow(index2)"
+          :v-model="vCon"
           :xs="{span: 24,offset: 0}"
           :sm="{span: 8,offset: 0}"
           :md="{span: 8, offset: 0}"
           :lg="{span: 5,offset: 1}"
         >
           <div class="vImg" @click="itemClick(index)">
-            <img :src="item.vImage" alt>
+            <img :src="item.videoImg" alt />
           </div>
           <div class="vCon">
-            <p class="vTitle" @click="itemClick(index)">{{item.vTit}}</p>
+            <p class="vTitle" @click="itemClick(index)">{{item.videoTitle}}</p>
             <div class="vBottom">
               <div>
                 <img src="~assets/img/common/playbackVolume.png" alt />
-                {{item.vPlay}}
+                播放量：{{item.viewNum}}
               </div>
-              <div>
+              <!-- <div>
                 <img src="~assets/img/common/collection.png" alt />
                 {{item.vColl}}
-              </div>
+              </div>-->
             </div>
           </div>
         </el-col>
@@ -46,218 +51,56 @@
 </template>
 
 <script>
-import Eltabs from "components/common/element/Eltabs"//tab栏插件
-import { sortByKey } from 'common/computed'
-import { inDetail } from 'common/mixin'
-
+import Eltabs from "components/common/element/Eltabs"; //tab栏插件
+import { sortByKey } from "common/computed";
+import { inDetail } from "common/mixin";
+import { videoList } from "network/video";
 export default {
   name: "videoMain",
   data() {
     return {
-      eltabs: ["按热度排序", "按时间排序"],
+      eltabs: ["按时间排序", "按热度排序"],
       sActive: 0,
-      vData: [
-        [
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/common/top.jpg"),
-            vTit: "2019最全Linux系统全套视频",
-            vPlay: 123,
-            vColl: 86
-          },
-          {
-            id: 'as215td',
-            vImage: require("assets/img/test/test3.jpg"),
-            vTit: "陶瓷艺术鉴赏与制作",
-            vPlay: 312,
-            vColl: 453
-          },
-          {
-            id: 'afg25sda',
-            vImage: require("assets/img/test/test2.jpg"),
-            vTit: "虹猫蓝兔七侠传2006 (1-108)",
-            vPlay: 453,
-            vColl: 54
-          },
-          {
-            id: 'a251qf',
-            vImage: require("assets/img/test/test4.jpg"),
-            vTit: "薪火传承·中国传统哲学通论",
-            vPlay: 4856,
-            vColl: 301
-          },
-          {
-            id: '15asfg5',
-            vImage: require("assets/img/test/test1.jpg"),
-            vTit: "逗逗迪迪之汉字小侦探",
-            vPlay: 12,
-            vColl: 48
-          },
-          {
-            id: '15sdg6',
-            vImage: require("assets/img/common/top.jpg"),
-            vTit: "2019最全Linux系统全套视频",
-            vPlay: 789,
-            vColl: 86
-          },
-          {
-            id: '16adsfg',
-            vImage: require("assets/img/test/test3.jpg"),
-            vTit: "陶瓷艺术鉴赏与制作",
-            vPlay: 789789,
-            vColl: 453
-          },
-          {
-            id: 'sfhg75',
-            vImage: require("assets/img/test/test2.jpg"),
-            vTit: "虹猫蓝兔七侠传2006 (1-108)",
-            vPlay: 34534,
-            vColl: 54
-          },
-          {
-            id: 'ag25312',
-            vImage: require("assets/img/test/test4.jpg"),
-            vTit: "薪火传承·中国传统哲学通论",
-            vPlay: 8737,
-            vColl: 301
-          },
-          {
-            id: 'fg136g',
-            vImage: require("assets/img/test/test1.jpg"),
-            vTit: "逗逗迪迪之汉字小侦探",
-            vPlay: 37544,
-            vColl: 48
-          },
-          {
-            id: '723gs1',
-            vImage: require("assets/img/common/top.jpg"),
-            vTit: "2019最全Linux系统全套视频",
-            vPlay: 3453,
-            vColl: 86
-          },
-          {
-            id: '3574812',
-            vImage: require("assets/img/test/test3.jpg"),
-            vTit: "陶瓷艺术鉴赏与制作",
-            vPlay: 2548,
-            vColl: 453
-          },
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/test/test2.jpg"),
-            vTit: "虹猫蓝兔七侠传2006 (1-108)",
-            vPlay: 7863,
-            vColl: 54
-          },
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/test/test4.jpg"),
-            vTit: "薪火传承·中国传统哲学通论",
-            vPlay: 37,
-            vColl: 301
-          },
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/test/test1.jpg"),
-            vTit: "逗逗迪迪之汉字小侦探",
-            vPlay: 387,
-            vColl: 48
-          },
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/common/top.jpg"),
-            vTit: "2019最全Linux系统全套视频",
-            vPlay: 1268,
-            vColl: 86
-          },
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/test/test3.jpg"),
-            vTit: "陶瓷艺术鉴赏与制作",
-            vPlay: 4213,
-            vColl: 453
-          },
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/test/test2.jpg"),
-            vTit: "虹猫蓝兔七侠传2006 (1-108)",
-            vPlay: 111,
-            vColl: 514
-          },
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/test/test4.jpg"),
-            vTit: "薪火传承·中国传统哲学通论",
-            vPlay: 666,
-            vColl: 301
-          },
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/test/test1.jpg"),
-            vTit: "逗逗迪迪之汉字小侦探",
-            vPlay: 888,
-            vColl: 48
-          },
-        ],
-        [
-          {
-            id: 'j12nia0',
-            vImage: require("assets/img/test/test4.jpg"),
-            vTit: "陶瓷艺术鉴赏与制作",
-            vPlay: 999,
-            vColl: 453
-          },
-          {
-            id: '1tsdgf21',
-            vImage: require("assets/img/common/top.jpg"),
-            vTit: "2019最全Linux系统全套视频",
-            vPlay: 45345,
-            vColl: 86
-          },
-          {
-            id: 'sdg23',
-            vImage: require("assets/img/test/test1.jpg"),
-            vTit: "逗逗迪迪之汉字小侦探",
-            vPlay: 345345,
-            vColl: 48
-          },
-          {
-            id: '736efdg2',
-            vImage: require("assets/img/test/test2.jpg"),
-            vTit: "虹猫蓝兔七侠传2006 (1-108)",
-            vPlay: 123783,
-            vColl: 54
-          },
-          {
-            id: '15qet1',
-            vImage: require("assets/img/test/test3.jpg"),
-            vTit: "薪火传承·中国传统哲学通论",
-            vPlay: 345345,
-            vColl: 301
-          }
-        ]
-      ]
+      currentPage: 1,
+      pageSize: 20,
+      vData: []
     };
   },
   components: {
     Eltabs
   },
+  mounted() {
+    this.videoList(this.currentPage, this.pageSize);
+  },
   methods: {
     handleClick(tab) {
-      this.sActive = parseInt(tab.index)//要将String转成integer类型
+      this.sActive = parseInt(tab.index); //要将String转成integer类型
     },
     isShow(index2) {
-      if(index2 === this.sActive) return true//判断显示哪部分视频
+      if (index2 === this.sActive) return true; //判断显示哪部分视频
     },
+    videoList(currentPage, pageSize) {
+      videoList(currentPage, pageSize).then(res => {
+        let video = [];
+        for (let i = 0; i < 2; i++) {
+          video.push(res.data.content);
+        }
+        this.vData = video;
+      });
+    }
   },
-  mixins: [ inDetail ],//详情页混动
-  mounted() {//计算热度
-    sortByKey(this.vData[0],'vPlay')
-  },
-  beforeUpdate() {
-    sortByKey(this.vData[0],'vPlay')
+  mixins: [inDetail], //详情页混动
+  watch: {
+    sActive(val) {
+      if (val === 1) {
+        sortByKey(this.vData[1], "createtime");
+        sortByKey(this.vData[0], "viewNum");
+      } else {
+        sortByKey(this.vData[1], "viewNum");
+        sortByKey(this.vData[0], "createtime");
+      }
+    }
   }
-  
 };
 </script>
 
@@ -267,8 +110,8 @@ export default {
   width: 100%;
 }
 .eltab {
-  -webkit-tap-highlight-color:rgba(0,0,0,0);/* 除掉手机端点击高亮效果 */
-  -webkit-tap-highlight-color:transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 除掉手机端点击高亮效果 */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .vContent {
@@ -328,7 +171,8 @@ export default {
   height: 11px;
 }
 .vBottom > div {
-  width: 26%;
+  /* width: 26%; */
+  width: 80%;
   padding-top: 2%;
   margin-left: 5%;
   margin-right: 5%;
@@ -342,15 +186,14 @@ export default {
 @media (max-width: 768px) {
   .vContent {
     width: 50%;
-    transition: .5s;
+    transition: 0.5s;
   }
 }
 @media (max-width: 442px) {
   .vContent {
     margin-left: 10%;
     width: 100%;
-    transition: .5s;
+    transition: 0.5s;
   }
 }
-
 </style>
