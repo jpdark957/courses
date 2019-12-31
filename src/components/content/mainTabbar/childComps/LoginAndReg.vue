@@ -6,7 +6,7 @@
         <span @click="dialogreg = true"><i class="el-icon-circle-plus-outline"></i>&nbsp;注册</span>
         </div>
 <!--登录对话框-->
-        <el-dialog title="登录" center width="30%" :visible.sync="centerDialogVisible" :close-on-click-modal="false" @close="close">
+        <el-dialog title="登录" center width="50vh" :visible.sync="centerDialogVisible" :close-on-click-modal="false" @close="close">
             <div class="from">
                 <el-form label-position="top" label-width="50px"
                          :model="user" status-icon :rules="rules"  ref="loginForm"
@@ -29,7 +29,7 @@
         </el-dialog>
 <!--登录对话框-->
 <!--注册对话框-->
-        <el-dialog title="注册" width="30%"  :visible.sync="dialogreg" :close-on-click-modal="false">
+        <el-dialog title="注册" width="50vh"  :visible.sync="dialogreg" :close-on-click-modal="false">
             <div class="from">
                 <el-form label-position="left" label-width="100px"
                          :model="user" status-icon :rules="rules"  ref="regForm"
@@ -65,21 +65,21 @@
         </el-dialog>
 <!--注册对话框-->
 <!--找回密码对话框-->
-        <el-dialog title="找回密码" width="30%" :visible.sync="dialogPass" :close-on-click-modal="false">
+        <el-dialog title="找回密码" width="50vh" :visible.sync="dialogPass" :close-on-click-modal="false">
             <div class="from">
                 <el-form label-position="left" label-width="100px"
                          :model="user" status-icon :rules="rules"  ref="passForm"
                 >
                     <el-form-item label="邮箱" prop="mail">
-                        <el-input type="mail" v-model="user.mail" placeholder="长度在 6 到 16 个字符"></el-input>
+                        <el-input type="mail" v-model="user.mail" placeholder="请输入注册时填写的邮箱"></el-input>
                     </el-form-item>
                     <el-form-item label="验证码"  prop="code" inline="true">
-                        <el-input plain style="width: 52%" v-model="user.code" placeholder="长度在 6 到 16 个字符"></el-input>
+                        <el-input plain style="width: 16vh" v-model="user.code" placeholder="长度为6个字符"></el-input>
                         <el-button style="margin-left: 15px" @click="getCode" v-show="show" >{{codeBtn}}</el-button>
                         <el-button style="margin-left: 15px" v-show="!show">请等待 {{count}}s</el-button>
                     </el-form-item>
                     <el-form-item label="新密码"  prop="pass">
-                        <el-input type="password" v-model="user.pass" placeholder="长度为6个字符"></el-input>
+                        <el-input type="password" v-model="user.pass" placeholder="长度在 6 到 16 个字符"></el-input>
                     </el-form-item>
                     <el-form-item>
                             <el-button plain type="primary" style="width: 100%;margin: 10px 0 0 0" @click="submitForm('passForm')">提交</el-button>
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-    import {login,mail,add} from "../../../../network/login";
+    import { login,mail,add,updatePassword } from "network/login";
     export default {
         name: "LoginAndReg",
         data() {
@@ -147,7 +147,7 @@
                     if (valid) {
                         formName=='loginForm' && this.getUser(this.user.name,this.user.pass)
                         formName =='regForm' && this.addUser()
-                        formName =='passForm' && alert("密码")
+                        formName =='passForm' && this.updatePassword(this.user.mail,this.user.code,this.user.pass)
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -177,7 +177,6 @@
                 const userMail =this.user.mail
                 var mailtest= new RegExp("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$");
                 if(mailtest.test(userMail)){
-                    console.log("this.user.mail")
                     this.$message({ message: "验证码正发往邮箱，请耐心等待以下", type: 'success' })
                     const TIME_COUNT = 60;
                     if (!this.timer) {
@@ -209,6 +208,16 @@
                     if (res.code==0){
                         this.$message({ message: "注册成功", type: 'success' })
                         this.dialogreg=false
+                    }else {
+                        this.$message({ message: res.msg, type: 'error' })
+                    }
+                })
+            },
+            updatePassword() {
+                updatePassword(this.user.mail,this.user.code,this.user.pass).then(res => {
+                    if (res.code==0){
+                        this.$message({ message: "修改成功", type: 'success' })
+                        this.dialogPass = false
                     }else {
                         this.$message({ message: res.msg, type: 'error' })
                     }

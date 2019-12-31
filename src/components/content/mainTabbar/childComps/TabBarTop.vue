@@ -23,7 +23,9 @@
     </div>
     <!--      头部登录与注册-->
     <video-tab v-else />
-    <img src="~assets/img/common/top.jpg" alt class="top-img" v-if="this.path === '/home'" />
+    <!-- <img src="~assets/img/common/top.jpg" alt class="top-img" v-if="this.path === '/home'" /> -->
+
+    <elrotation :rotation="rotation" v-if="this.path === '/home'"/>
   </div>
 </template>
 
@@ -32,11 +34,20 @@ import { wRoute, TabRoute } from "common/mixin";
 import VideoTab from "./VideoTab";
 import LoginAndReg from "./LoginAndReg";
 import User from "./User";
+import Elrotation from "components/common/element/Elrotation"; //轮播图插件
+
 export default {
   name: "TabBarTop",
   data() {
     return {
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      rotation: [
+        //轮播图数据
+        require("assets/img/common/top.jpg"),
+        require("assets/img/common/top2.jpg"),
+        require("assets/img/common/top3.jpg"),
+        require("assets/img/common/top4.jpg"),
+      ]
     };
   },
   computed: {
@@ -47,7 +58,8 @@ export default {
   components: {
     VideoTab,
     LoginAndReg,
-    User
+    User,
+    Elrotation
   },
   mixins: [wRoute, TabRoute]
 };
@@ -67,6 +79,7 @@ export default {
   width: 100%;
   height: 300px;
 }
+
 .login {
   margin-top: 0.4em;
   margin-right: 2em;
@@ -83,4 +96,5 @@ export default {
     display: block;
   }
 }
+
 </style>

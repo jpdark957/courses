@@ -99,19 +99,9 @@ export default {
         this.vData = video;
       });
     },
-    videoList2(currentPage, pageSize) {
-      videoList(currentPage, pageSize).then(res => {
-        let currentPage = this.currentPage;
-        let pageSize = res.data.size;
-        let total = res.data.totalElements;
-        this.PageInfo = new PageInfo(currentPage, pageSize, total);
-        this.vData[this.sActive] = res.data.content;
-      });
-    },
-
     currentChange(value) {
       this.currentPage = value;
-      this.videoList2(this.currentPage, this.pageSize);
+      this.videoList(this.currentPage, this.pageSize);
     }
   },
   mixins: [inDetail], //详情页混动

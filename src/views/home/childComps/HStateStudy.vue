@@ -10,7 +10,7 @@
       <div class="videoCon">
         <video controls>
           <source
-            src="http://gdkmlzh.cn-gd.ufileos.com/shipin%2FLinux.mp4?UCloudPublicKey=7XUUrIZu_COBbktItgfRT0tYkbMP_GSP-OWjXsTe&Signature=iId6MPYFtIvWEFmHf%2FgzQnFxUP4%3D&Expires=1577106553"
+            src="http://gdkmlzh.cn-gd.ufileos.com/shipin%2FLinux.mp4?UCloudPublicKey=7XUUrIZu_COBbktItgfRT0tYkbMP_GSP-OWjXsTe&Signature=xPQcLFasU%2B4fl5vw0Blkcnz9oe4%3D&Expires=1577779918"
           />
         </video>
       </div>

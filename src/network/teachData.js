@@ -23,6 +23,6 @@ export function dataDownLoad(resUrl) {
 export function dataByRtId(rtId) {
   return request({
     method: 'get',
-    url: '/resources/' + rtId
+    url: '/resources/'+rtId
   })
 }

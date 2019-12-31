@@ -3,7 +3,7 @@
     <button @click="backClick">
       <img src="~assets/img/common/back.png" alt />
     </button>
-    <span class="titleSpan">{{vTitle}}</span>
+    <span class="titleSpan">{{this.$route.query.videoName}}</span>
 
     <!-- <div class="UImgBox">
       <img src="~assets/img/common/top.jpg" class="userImg" />

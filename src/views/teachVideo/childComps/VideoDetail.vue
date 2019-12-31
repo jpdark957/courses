@@ -10,7 +10,7 @@
           <span>{{this.sActive+1}}/{{this.comLength}}</span>
         </el-col>
         <el-col :span="24" class="listDetail">
-          <ul class="listUl">
+          <ul class="listUl" v-if="vListCon.length != 0">
             <li
               v-for="(item, index) in vListCon"
               :key="index"
@@ -18,10 +18,11 @@
               :class="{active: sActive === index}"
               @click="active(item,index)"
             >
-              <span>{{item.viTitle}}</span>
+              <span>P{{index+1}} {{item.viTitle}}</span>
               <span>{{item.vConTime}}</span>
             </li>
           </ul>
+          <ul v-else class="ListNull">暂无更多视频选集</ul>
         </el-col>
       </el-col>
     </el-row>
@@ -60,7 +61,7 @@ export default {
       form: {
         desc: ""
       },
-      nowUrl: ''
+      nowUrl: ""
     };
   },
   components: {
@@ -79,12 +80,12 @@ export default {
     active(item, index) {
       this.sActive = index;
       this.nowVideo = index;
-      this.nowUrl = item.viUrl
+      this.nowUrl = item.viUrl;
     },
     videoDetail(videoId) {
       videoDetail(videoId).then(res => {
         this.vListCon = res.data;
-        this.nowUrl = res.data[0].viUrl
+        this.nowUrl = res.data[0].viUrl;
       });
     },
     videoComment(parentId) {
@@ -225,5 +226,15 @@ video {
   text-align: center;
   color: rgb(142, 142, 142);
   font-size: 16px;
+}
+.ListNull {
+  font-size: 16px;
+  text-align: center;
+  line-height: 25vh;
+  color: rgb(153, 153, 153);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>

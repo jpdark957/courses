@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <main-tab-bar />
-    <!-- <keep-alive> -->
-    <router-view v-if="isRouterAlive" />
-    <!-- </keep-alive> -->
+    <div id="v-content" v-bind:style="{minHeight: Height+'px'}">
+      <router-view v-if="isRouterAlive" />
+    </div>
     <c-footer />
   </div>
 </template>
@@ -27,7 +27,16 @@ export default {
   },
   data() {
     return {
-      isRouterAlive: true
+      isRouterAlive: true,
+      Height: 0
+    };
+  },
+  mounted() {
+    //动态设置内容高度 让footer始终居底   header+footer的高度是100
+    this.Height = document.documentElement.clientHeight - 100; 
+    //监听浏览器窗口变化
+    window.onresize = () => {
+      this.Height = document.documentElement.clientHeight - 100;
     };
   },
   methods: {

@@ -20,18 +20,30 @@ export const inDetail = {
     }
   },
   methods: {
-    itemClick(index) {
+    itemClick(index, item) {
       if (this.$route.path == '/teachVideo') {
         let videoId = this.vData[this.sActive][index].videoId
+        let videoName = this.vData[this.sActive][index].videoTitle
         this.$router.push({
           path: this.$route.path + '/' + this.vData[this.sActive][index].videoId,
           query: {
-            videoId
+            videoId,
+            videoName
           }
         })
-
-        // console.log(this.vData[this.sActive][index].videoId)
       }
+      else if (this.$route.path == '/discussion') {
+        let discussion = item;
+        let currentPage = this.currentPage;
+        this.$router.push({
+          path: this.$route.path + "/" + item.qid,
+          query: {
+            discussion,
+            currentPage
+          }
+        });
+      }
+
       // if(this.vData[this.sActive]) 
       //   this.$router.push(this.$route.path + '/' + this.vData[this.sActive][index].id)
       // else 

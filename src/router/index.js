@@ -6,11 +6,9 @@ const TeachVideo = () => import('@/views/teachVideo/TeachVideo')
 const videoDetail = () => import('@/views/teachVideo/childComps/videoDetail')
 const Comment = () => import('@/views/comment/Comment')
 const TeachData = () => import('@/views/teachData/TeachData')
-const dataDetail = () => import('@/views/teachData/childComps/dataDetail')
 const discussion = () => import('@/views/courseDiscussion/discussion')
 const discussionDetail = () => import('@/views/courseDiscussion/childComps/discussionDetail')
 const Me = () => import('@/views/me/Me')
-
 //安装插件
 Vue.use(VueRouter)
 
@@ -44,10 +42,7 @@ const routes = [
     path: '/teachData',
     component: TeachData
   },
-  {
-    path: '/teachData/:id',
-    component: dataDetail
-  },
+
   {
     path: '/discussion',
     component: discussion,

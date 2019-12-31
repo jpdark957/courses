@@ -32,9 +32,9 @@ export default {
       sActive: 0,
       rotation: [
         //轮播图数据
-        require("assets/img/test/test1.jpg"),
-        require("assets/img/test/test2.jpg"),
-        require("assets/img/test/test3.jpg")
+        require("assets/img/test/photo1.jpg"),
+        require("assets/img/test/photo2.jpg"),
+        require("assets/img/test/photo3.jpg")
       ],
       eltabs: ["按热度排序", "按时间排序"],
       form: {
@@ -88,5 +88,8 @@ export default {
 }
 .el-row > .el-col {
   margin-top: 1.2em;
+}
+.el-carousel {
+  height: 150px;
 }
 </style>

@@ -11,7 +11,7 @@
       <el-card>
         <el-col class="con" v-for="(item, index) in content" :key="index">
           <img :src="item.user.userIcon" alt />
-          <p @click="itemClicka(index,item)">{{item.title}}</p>
+          <p @click="itemClick(index,item)">{{item.title}}</p>
           <p>
             <!-- <span><i class="el-icon-s-comment"></i>1个回复</span>
             <span><i class="el-icon-view"></i>10次浏览</span>-->
@@ -31,7 +31,7 @@
       </div>
       <el-input placeholder="请输入标题" v-model="title" clearable></el-input>
       <vuequill-editor class="editor" ref="quillEditor" />
-      <el-button type="primary" @click="add">提交</el-button>
+      <el-button type="primary" @click="add" class="addButton">提交</el-button>
     </el-col>
   </el-row>
 </template>
@@ -86,17 +86,6 @@ export default {
     currentChange(value) {
       this.currentPage = value;
       this.discussionList(this.currentPage, this.pageSize);
-    },
-    itemClicka(index, item) {
-      let discussion = item;
-      let currentPage = this.currentPage;
-      this.$router.push({
-        path: this.$route.path + "/" + item.qid,
-        query: {
-          discussion,
-          currentPage
-        }
-      });
     },
     add() {
       if (this.title != "" && this.$refs.quillEditor.aa != "") {
@@ -182,6 +171,21 @@ p > span:nth-child(1) {
 .editor {
   height: 30em;
   background-color: #fff;
-  margin: 0 0 5em;
+  /* padding: 0 0 5em; */
+}
+.addButton {
+  margin-top: 5em;
+}
+@media (max-width: 639px) {
+  .editor {
+    padding-bottom: 2.3em;
+  }
+}
+@media (max-width: 445px) {
+  .editor {
+    height: 20em;
+    padding-bottom: 5em;
+  }
+
 }
 </style>

@@ -33,7 +33,7 @@
             <el-table-column prop="viewNum" label="查看次数" width="120"></el-table-column>
             <el-table-column label="操作" width="198">
               <template slot-scope="scope">
-                <el-button type="primary" @click.stop.prevent="detail(scope.row)">查看</el-button>
+                <el-button type="primary" @click.stop.prevent="detail(scope.$index,scope.row)">查看</el-button>
                 <!-- <el-button type="primary"  @click.stop.prevent="deleteRow(scope.$index, tableData)">下载</el-button> -->
                 <el-button type="primary" @click="downLoad(scope.row)">下载文件</el-button>
               </template>
@@ -108,7 +108,8 @@ export default {
       this.currentPage = value;
       this.teachDataList(this.currentPage, this.pageSize);
     },
-    detail(row) {
+    detail(index,row) {
+      this.vData[index].viewNum = this.vData[index].viewNum+1
       this.centerDialogVisible = true;
       this.resContent = row.resContent;
     },
@@ -130,7 +131,6 @@ export default {
         for (let i = 0; i < this.dList.length; i++) {
           if (this.dList[i].rtTitle == tab.label) {
             dataByRtId(this.dList[i].rtId).then(res => {
-              console.log("12312");
               this.vData = res.data;
             });
           }
