@@ -18,12 +18,6 @@ export default {
   data() {
     return {
       HomeTabAContent: [],
-      // cContent: [
-      //   {
-      //     // iamges: require(""),
-      //     content: []
-      //   }
-      // ]
     }
   },
   components: {
@@ -37,10 +31,7 @@ export default {
   methods: {
     getHomeTab() {
       getHomeTab().then(res => {
-        // console.log(res)
-        // console.log(res[0])
         this.HomeTabAContent = res
-        // this.tabs = res.homeLabel
       })
     }
   }

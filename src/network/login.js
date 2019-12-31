@@ -10,9 +10,9 @@ export function login(userName,userPass) {
         }
     })
 }
-export function logout() {
+export function logout(id) {
     return request({
-        url: '/logout',
+        url: '/logout/'+id,
         method: 'post'
     })
 }

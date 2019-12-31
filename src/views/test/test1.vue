@@ -72,8 +72,10 @@
                 test2(this.tousername,this.text)
             },
             test(){
+
+                
                 this.websocket = new WebSocket(
-                    "ws://localhost:8888/linux/websocket/"+this.username
+                    "ws://127.0.0.1:8888/linux/websocket/"+this.username
                 )
                 this.initWebSocket();
             }

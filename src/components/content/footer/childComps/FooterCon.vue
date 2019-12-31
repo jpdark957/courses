@@ -1,9 +1,9 @@
 <template>
   <div class="fCon">
-    <div>
+    <div class="fOne">
       <span v-for="(item, index) in firstCon" :key="index">{{item}}</span>
     </div>
-    <div>
+    <div class="fTwo">
       <span v-for="(item, index) in lastCon" :key="index">{{item}}</span>
     </div>
   </div>
@@ -34,5 +34,6 @@ export default {
   span {
     padding-left: 6px;
   }
+
 
 </style>

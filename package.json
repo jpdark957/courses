@@ -11,9 +11,12 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
     "core-js": "^3.3.2",
+    "editor.md": "^1.5.0",
     "element-ui": "^2.13.0",
+    "jquery": "^3.4.1",
     "qs": "^6.9.1",
     "vue": "^2.6.10",
+    "vue-editor-md3": "^1.1.1",
     "vue-router": "^3.1.2",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.7.0"

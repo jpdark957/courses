@@ -3,12 +3,17 @@ import VueRouter from 'vue-router'
 
 const Home = () => import('@/views/home/Home')
 const TeachVideo = () => import('@/views/teachVideo/TeachVideo')
-const VideoDetail = () => import('@/views/teachVideo/childComps/VideoDetail')
+const videoDetail = () => import('@/views/teachVideo/childComps/videoDetail')
 const Comment = () => import('@/views/comment/Comment')
+const TeachData = () => import('@/views/teachData/TeachData')
+const dataDetail = () => import('@/views/teachData/childComps/dataDetail')
+const discussion = () => import('@/views/courseDiscussion/discussion')
 const Me = () => import('@/views/me/Me')
 const Test = () => import('@/views/test/test')
 const Test1 = () => import('@/views/test/test1')
 const Chat = () => import('@/views/chat/Chat')
+const ChatUser = () => import('@/views/chat/ChatUser')
+const User = () => import('@/views/user/User')
 
 //安装插件
 Vue.use(VueRouter)
@@ -28,7 +33,7 @@ const routes = [
   },
   {
     path: '/teachVideo/:id',
-    component: VideoDetail
+    component: videoDetail
   },
   {
     path: '/comment',
@@ -50,6 +55,27 @@ const routes = [
     path: '/chat',
     component: Chat
   }
+  ,
+  {
+    path: '/teachData',
+    component: TeachData
+  },
+  {
+    path: '/teachData/:id',
+    component: dataDetail
+  },
+  {
+    path: '/discussion',
+    component: discussion
+  },
+  {
+    path: '/chatuser',
+    component: ChatUser
+  },
+  {
+    path: '/user/:userId',
+    component: User
+  },
 ]
 
 const router = new VueRouter({

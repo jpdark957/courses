@@ -9,13 +9,15 @@
     <div class="studyContent">
       <div class="videoCon">
         <video controls>
-          <source src="~assets/video/Linux.mp4">
+          <source
+            src="http://gdkmlzh.cn-gd.ufileos.com/shipin%2FLinux.mp4?UCloudPublicKey=7XUUrIZu_COBbktItgfRT0tYkbMP_GSP-OWjXsTe&Signature=iId6MPYFtIvWEFmHf%2FgzQnFxUP4%3D&Expires=1577106553"
+          />
         </video>
       </div>
       <div class="videoList">
         <ul class="tools">
-          <li v-for="(item,index) in toolList" :key="index">
-            <img :src="item.tImg" alt="">
+          <li v-for="(item,index) in toolList" :key="index" @click="detailClick(item)">
+            <img :src="item.tImg" alt />
             <span>{{item.tName}}</span>
           </li>
         </ul>
@@ -33,47 +35,79 @@
         </ul>
       </div>
     </div>
+
+    <el-dialog :visible.sync="centerDialogVisible" width="70%" center>
+      <span>
+        <img :src="watchDetail" alt class="detail" />
+      </span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="downLoad">下 载</el-button>
+      </span>
+    </el-dialog>
   </content-box>
 </template>
 
 <script>
-import ContentBox from 'components/content/overall/ContentBox'
+import ContentBox from "components/content/overall/ContentBox";
 export default {
-  name: 'HStateStudy',
+  name: "HStateStudy",
   data() {
     return {
-      sName: '认识Linux',
-      state: '从这里开始',
-      titleP: '想的多一定没做的多有效，然而不想便做一定没什么效果。',
+      centerDialogVisible: false,
+      sName: "认识Linux",
+      state: "从这里开始",
+      titleP: "想的多一定没做的多有效，然而不想便做一定没什么效果。",
       toolList: [
         {
-          tImg: require('assets/img/home/mindMapping.png'),
-          tName: 'Linux学习思维导图'
+          tImg: require("assets/img/home/mindMapping.png"),
+          tName: "Linux学习思维导图",
+          tDetail: require("assets/img/home/1.jpg")
         },
         {
-          tImg: require('assets/img/home/catalog.png'),
-          tName: 'Linux目录结构'
+          tImg: require("assets/img/home/catalog.png"),
+          tName: "Linux目录结构",
+          tDetail: require("assets/img/home/2.jpg")
         },
         {
-          tImg: require('assets/img/home/instructions.png'),
-          tName: 'Linux常见指令'
+          tImg: require("assets/img/home/instructions.png"),
+          tName: "Linux常见指令",
+          tDetail: require("assets/img/home/3.png")
         },
         {
-          tImg: require('assets/img/home/null.png'),
-          tName: '暂无'
+          tImg: require("assets/img/home/null.png"),
+          tName: "暂无"
         }
       ],
-
-    }
+      ii: ""
+    };
   },
   components: {
     ContentBox
   },
-}
+  methods: {
+    open4() {
+      this.$notify.error({
+        title: "错误",
+        message: "暂无该详细图片"
+      });
+    },
+    detailClick(item) {
+      if (item.tDetail) {
+        this.centerDialogVisible = true;
+        this.ii = item.tDetail;
+      } else this.open4();
+    }
+  },
+  computed: {
+    watchDetail: function() {
+      return this.ii;
+    }
+  }
+};
 </script>
 
 <style scoped>
-
 .ContentBox {
   background-color: #f0f0f0;
   /* height: 750px; */
@@ -91,7 +125,7 @@ export default {
 .studyContent {
   width: 100%;
   height: 400px;
-  margin: 4% auto 0 5% ;
+  margin: 4% auto 0 5%;
   /* background-color: gold; */
 }
 .videoCon {
@@ -103,7 +137,6 @@ video {
   height: 100%;
   outline: none;
 }
-
 
 .videoList {
   width: 35%;
@@ -134,9 +167,8 @@ video {
   cursor: pointer;
 }
 
-
 .tools li img {
-  width:22%;
+  width: 22%;
   height: 45%;
   /* background-color: red; */
   margin: 12% 0 0 5%;
@@ -158,7 +190,6 @@ video {
 .talkTitle {
   width: 100%;
   height: 20%;
-
 }
 .talkList .titleHeader {
   width: 74px;
@@ -171,7 +202,7 @@ video {
   width: 100px;
   float: right;
   margin-top: 4%;
-  cursor:pointer;
+  cursor: pointer;
 }
 .more:hover {
   color: red;
@@ -179,14 +210,14 @@ video {
 .talkList .talk {
   width: 90%;
   list-style: none;
-  margin:2% 0 0 6%;
+  margin: 2% 0 0 6%;
 }
 .talk li {
   margin: 5% 0 0 0;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  cursor:pointer;
+  cursor: pointer;
 }
 .talk li .talkNum {
   width: 20px;
@@ -196,19 +227,68 @@ video {
   color: #fff;
   background-color: red;
   float: left;
-  
 }
 .talk li span:last-child {
   width: 20px;
   margin: 0 0 0 2%;
   font-size: 14px;
- 
 }
 
-.tools li:hover,.talk li:hover {
-  background-color: rgba(33,68,131,.3);
-  transition: .3s;
+.tools li:hover,
+.talk li:hover {
+  background-color: rgba(33, 68, 131, 0.3);
+  transition: 0.3s;
   color: #f0f0f0;
 }
 
+.detail {
+  width: 100%;
+}
+
+@media (max-width: 1135px) {
+  .videoCon {
+    width: 60%;
+    height: 80%;
+    float: left;
+  }
+}
+@media (max-width: 804px) {
+  .ContentBox {
+    width: 90%;
+    height: 500px;
+  }
+}
+@media (max-width: 724px) {
+  .ContentBox {
+    width: 90%;
+    height: 650px;
+  }
+  .studyContent {
+    margin: 8% 0 0 0%;
+  }
+  .videoCon {
+    margin-top: 5em;
+    width: 100%;
+    margin: 0;
+  }
+  .videoList {
+    width: 45%;
+    margin: 2em 2.5% 0 2.5%;
+  }
+  .contentTitle span {
+    font-size: 20px;
+  }
+  .contentTitle p {
+    font-size: 14px;
+  }
+}
+@media (max-width: 502px) {
+  .ContentBox {
+    width: 90%;
+    height: 850px;
+  }
+  .videoList {
+    width: 100%;
+  }
+}
 </style>

@@ -10,6 +10,13 @@ export function updateUser(userNumber,userNickname) {
         }
     })
 }
+export function userInfo(userId) {
+    return request({
+        url: '/user/'+userId,
+        method: 'get',
+    })
+}
+
 export function updatePass(oldpass,pass) {
     return request({
         url: '/byuser/user/pass',

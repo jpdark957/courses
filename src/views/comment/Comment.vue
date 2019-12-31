@@ -26,11 +26,8 @@
     import CommentItem from "./commentComps/CommentItem";
     import Elpagination from "../../components/common/element/Elpagination";
     import CommentAdd from "./commentComps/CommentAdd";
-
     import {commentList,byusercommentList} from "../../network/commen";
     import {PageInfo} from "../../common/utils";
-
-
     export default {
         name: "Comment",
         components: {
@@ -56,7 +53,6 @@
             this.getCommentList(this.currentPage,this.pageSize)
         },
         mounted() {
-
         },
         methods: {
             //网络请求

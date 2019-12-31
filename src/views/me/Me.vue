@@ -29,7 +29,7 @@
                             :before-upload="beforeAvatarUpload"
                             :headers="sessionId"
                     >
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img  :src="imageUrl" class="avatar">
                     </el-upload>
                 </el-col>
                 <el-col :span="10" :offset="2">
