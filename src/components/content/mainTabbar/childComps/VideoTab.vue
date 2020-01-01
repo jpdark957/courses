@@ -5,10 +5,6 @@
     </button>
     <span class="titleSpan">{{this.$route.query.videoName}}</span>
 
-    <!-- <div class="UImgBox">
-      <img src="~assets/img/common/top.jpg" class="userImg" />
-    </div>-->
-
     <login-and-reg v-if="!user" class="login" />
     <user v-if="user" class="user"/>
   </div>
@@ -83,13 +79,13 @@ export default {
 }
 
 .login,.user {
-  margin-top: -4.5em;
+  margin-top: 1.5em;
   margin-right: 4em;
+  float: right;
 }
 @media (max-width: 767px) {
   .login,.user {
     margin-right: 2em;
-    margin-top: -4.1em;
   }
   .titleSpan {
     margin-left: -0.7em;

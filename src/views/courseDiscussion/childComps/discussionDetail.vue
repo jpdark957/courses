@@ -10,18 +10,18 @@
     >
       <el-card>
         <el-col :span="24" class="head">
-          <h1>{{content.title}}</h1>
+          <h1>{{discussion.title}}</h1>
           <p>
             <span>
-              <i class="el-icon-user-solid"></i>作者:jpdark
+              <i class="el-icon-user-solid"></i>作者:{{discussion.user.userNickname}}
             </span>
             <span>
               <i class="el-icon-time"></i>
-              发布时间：{{content.createtime | showDate}}
+              发布时间：{{discussion.createtime | showDate}}
             </span>
           </p>
         </el-col>
-        <el-col :span="24" class="con" v-html="content.description">{{content.description}}</el-col>
+        <el-col :span="24" class="con" v-html="discussion.description">{{discussion.description}}</el-col>
       </el-card>
       <comment1
         :commentData="commentData"

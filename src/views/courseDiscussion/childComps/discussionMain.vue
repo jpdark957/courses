@@ -1,5 +1,22 @@
 <template>
   <el-row>
+    <el-row class="tab">
+      <el-col
+        :span="16"
+        :offset="4"
+        :xs="{span: 24, offset: 0}"
+        :sm="{span: 20, offset: 2}"
+        :md="{span: 20, offset: 2}"
+        :lg="{span: 16, offset: 4}"
+      >
+        <el-card class="box-card box-cards">
+          <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>课程讨论</el-breadcrumb-item>
+          </el-breadcrumb>
+        </el-card>
+      </el-col>
+    </el-row>
     <el-col
       :span="16"
       :offset="4"
@@ -17,7 +34,7 @@
             <span><i class="el-icon-view"></i>10次浏览</span>-->
             <span>
               <i class="el-icon-user-solid"></i>
-              作者:{{item.user.userName}}
+              作者:{{item.user.userNickname}}
             </span>
             <span>
               <i class="el-icon-time"></i>
@@ -186,6 +203,5 @@ p > span:nth-child(1) {
     height: 20em;
     padding-bottom: 5em;
   }
-
 }
 </style>

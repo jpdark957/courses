@@ -1,5 +1,11 @@
 <template>
   <div>
+    <el-card class="box-card box-cards">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>教学视频</el-breadcrumb-item>
+      </el-breadcrumb>
+    </el-card>
     <el-row>
       <el-col :span="18" :offset="3" :xs="{span: 24, offset: 0}">
         <el-col :xs="{span: 12 , offset: 6}" class="eltab">
@@ -7,22 +13,14 @@
         </el-col>
       </el-col>
     </el-row>
-    <el-row :gutter="60">
-      <el-col
-        :span="21"
-        :offset="1"
-        v-for="(vCon, index2) in vData"
-        :key="index2"
-        :xs="{span: 24, offset: 0}"
-      >
+    <div v-if="sActive == 0">
+      <el-row :gutter="60">
         <el-col
           :span="5"
           :offset="1"
-          v-for="(item, index) in vCon"
           :key="index"
           class="vContent"
-          v-show="isShow(index2)"
-          :v-model="vCon"
+          v-for="(item, index) in vData"
           :xs="{span: 24,offset: 0}"
           :sm="{span: 8,offset: 0}"
           :md="{span: 8, offset: 0}"
@@ -38,17 +36,44 @@
                 <img src="~assets/img/common/playbackVolume.png" alt />
                 播放量：{{item.viewNum}}
               </div>
-              <!-- <div>
-                <img src="~assets/img/common/collection.png" alt />
-                {{item.vColl}}
-              </div>-->
             </div>
           </div>
         </el-col>
-      </el-col>
-    </el-row>
-    <div class="page">
-      <elpagination @currentChange="currentChange" :PageInfo="PageInfo" />
+      </el-row>
+      <div class="page">
+        <elpagination @currentChange="currentChange" :PageInfo="PageInfo" />
+      </div>
+    </div>
+    <div v-else>
+      <el-row :gutter="60">
+        <el-col
+          :span="5"
+          :offset="1"
+          :key="index"
+          class="vContent"
+          v-for="(item, index) in vData1"
+          :xs="{span: 24,offset: 0}"
+          :sm="{span: 8,offset: 1}"
+          :md="{span: 8, offset: 1}"
+          :lg="{span: 5,offset: 1}"
+        >
+          <div class="vImg" @click="itemClick(index)">
+            <img :src="item.videoImg" alt />
+          </div>
+          <div class="vCon">
+            <p class="vTitle" @click="itemClick(index)">{{item.videoTitle}}</p>
+            <div class="vBottom">
+              <div>
+                <img src="~assets/img/common/playbackVolume.png" alt />
+                播放量：{{item.viewNum}}
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+      <div class="page">
+        <elpagination @currentChange="currentChange" :PageInfo="PageInfo" />
+      </div>
     </div>
   </div>
 </template>
@@ -68,8 +93,11 @@ export default {
       sActive: 0,
       currentPage: 1,
       pageSize: 12,
+      currentPage2: 1,
+      pageSize2: 12,
       PageInfo,
-      vData: []
+      vData: [],
+      vData1: []
     };
   },
   components: {
@@ -78,6 +106,7 @@ export default {
   },
   mounted() {
     this.videoList(this.currentPage, this.pageSize);
+    this.videoList2(this.currentPage2, this.pageSize2);
   },
   methods: {
     handleClick(tab) {
@@ -92,40 +121,32 @@ export default {
         let pageSize = res.data.size;
         let total = res.data.totalElements;
         this.PageInfo = new PageInfo(currentPage, pageSize, total);
-        let video = [];
-        for (let i = 0; i < 2; i++) {
-          video.push(res.data.content);
-        }
-        this.vData = video;
+        this.vData = res.data.content;
       });
     },
     videoList2(currentPage, pageSize) {
       videoList(currentPage, pageSize).then(res => {
-        let currentPage = this.currentPage;
+        let currentPage2 = this.currentPage2;
         let pageSize = res.data.size;
         let total = res.data.totalElements;
-        this.PageInfo = new PageInfo(currentPage, pageSize, total);
-        this.vData[this.sActive] = res.data.content;
+        this.PageInfo = new PageInfo(currentPage2, pageSize, total);
+        sortByKey(res.data.content, "viewNum");
+        this.vData1 = res.data.content;
       });
     },
 
     currentChange(value) {
-      this.currentPage = value;
-      this.videoList2(this.currentPage, this.pageSize);
+      if (this.sActive == 0) {
+        this.currentPage = value;
+        this.videoList(this.currentPage, this.pageSize);
+      } else {
+        this.currentPage2 = value;
+        this.videoList2(this.currentPage2, this.pageSize2);
+      }
     }
   },
   mixins: [inDetail], //详情页混动
-  watch: {
-    sActive(val) {
-      if (val === 1) {
-        sortByKey(this.vData[1], "createtime");
-        sortByKey(this.vData[0], "viewNum");
-      } else {
-        sortByKey(this.vData[1], "viewNum");
-        sortByKey(this.vData[0], "createtime");
-      }
-    }
-  }
+  watch: {}
 };
 </script>
 
@@ -223,5 +244,16 @@ export default {
 }
 .page {
   text-align: center;
+  margin-bottom: 3em;
+}
+
+.box-cards {
+  width: 90%;
+  margin: 20px auto;
+}
+@media (max-width: 767px) {
+  .box-cards {
+    width: 100%;
+  }
 }
 </style>

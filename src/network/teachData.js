@@ -13,8 +13,8 @@ export function teachDataType(currentPage,pageSize) {
 }
 export function dataDownLoad(resUrl) {
   return request({
-    method: 'get',
-    url: '/resource/download',
+    // url: '/resource/download',
+    url: '/download',
     params: {
       resUrl
     }

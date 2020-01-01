@@ -32,9 +32,6 @@
             <li v-for="item2 in item.list" :key="item2">{{item2}}</li>
           </ul>
         </div>
-        <div class="btn">
-          <button>了解更多</button>
-        </div>
       </div>
     </div>
   </content-box>
@@ -174,26 +171,7 @@ export default {
   margin-top: 2%;
 }
 
-/**button按钮 */
-.btn {
-  width: 58%;
-  height: 20%;
-  float: left;
-}
-.btn button {
-  width: 20%;
-  height: 40%;
-  float: right;
-  background-color: #8194b4;
-  color: #fff;
-  outline: none;
-  border-radius: 7px 7px;
-}
-.btn button:hover {
-  background-color: var(--color-main);
-  color: #fff;
-  transition: 0.3s;
-}
+
 
 /* 适配手机端 */
 @media (max-width: 804px) {

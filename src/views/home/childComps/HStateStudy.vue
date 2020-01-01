@@ -28,9 +28,9 @@
           <span class="more">查看更多>></span>
         </div>
         <ul class="talk">
-          <li v-for="(item, index) in 3" :key="index">
+          <li v-for="(item, index) in discussion" :key="index" @click="itemClick(index,item)">
             <span class="talkNum">{{index+1}}</span>
-            <span>想的多一定没做的多有效，然而不想便做一定没什么效果。效果。效果。</span>
+            <span>{{item.title}}</span>
           </li>
         </ul>
       </div>
@@ -50,8 +50,13 @@
 
 <script>
 import ContentBox from "components/content/overall/ContentBox";
+import { discussionList } from 'network/discussion'
+import { inDetail } from "common/mixin";
+
 export default {
   name: "HStateStudy",
+  mixins: [inDetail],
+
   data() {
     return {
       centerDialogVisible: false,
@@ -79,7 +84,10 @@ export default {
           tName: "暂无"
         }
       ],
-      ii: ""
+      ii: "",
+      discussion: [],
+      currentPage: 1,
+      pageSize: 3
     };
   },
   components: {
@@ -97,7 +105,15 @@ export default {
         this.centerDialogVisible = true;
         this.ii = item.tDetail;
       } else this.open4();
+    },
+    discussionList(currentPage, pageSize) {
+      discussionList(currentPage,pageSize).then(res => {
+        this.discussion = res.data.content
+      })
     }
+  },
+  mounted() {
+    this.discussionList(this.currentPage, this.pageSize)
   },
   computed: {
     watchDetail: function() {

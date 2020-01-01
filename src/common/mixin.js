@@ -22,21 +22,45 @@ export const inDetail = {
   methods: {
     itemClick(index, item) {
       if (this.$route.path == '/teachVideo') {
-        let videoId = this.vData[this.sActive][index].videoId
-        let videoName = this.vData[this.sActive][index].videoTitle
-        this.$router.push({
-          path: this.$route.path + '/' + this.vData[this.sActive][index].videoId,
-          query: {
-            videoId,
-            videoName
-          }
-        })
+        if (this.sActive == 0) {
+          let videoId = this.vData[index].videoId
+          let videoName = this.vData[index].videoTitle
+          console.log(videoId)
+          this.$router.push({
+            path: this.$route.path + '/' + this.vData[index].videoId,
+            query: {
+              videoId,
+              videoName
+            }
+          })
+        } else {
+          let videoId = this.vData1[index].videoId
+          let videoName = this.vData1[index].videoTitle
+          this.$router.push({
+            path: this.$route.path + '/' + this.vData1[index].videoId,
+            query: {
+              videoId,
+              videoName
+            }
+          })
+        }
+
       }
       else if (this.$route.path == '/discussion') {
         let discussion = item;
         let currentPage = this.currentPage;
         this.$router.push({
           path: this.$route.path + "/" + item.qid,
+          query: {
+            discussion,
+            currentPage
+          }
+        });
+      } else if (this.$route.path == '/home') {
+        let discussion = item;
+        let currentPage = this.currentPage;
+        this.$router.push({
+          path: '/discussion/' + item.qid,
           query: {
             discussion,
             currentPage

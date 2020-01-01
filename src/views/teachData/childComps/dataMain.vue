@@ -1,5 +1,15 @@
 <template>
   <el-row>
+    <el-row class="tab">
+      <el-col :span="19" :offset="2" :xs="{span: 24, offset: 0}">
+        <el-card class="box-card box-cards">
+          <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>教学反馈</el-breadcrumb-item>
+          </el-breadcrumb>
+        </el-card>
+      </el-col>
+    </el-row>
     <!-- 移动端tab栏 -->
     <el-col class="hidden-sm-and-up">
       <el-tabs type="border-card" @tab-click="phoneTab">
@@ -9,9 +19,9 @@
     </el-col>
     <!-- PC端tab栏 -->
     <el-col :span="3" :offset="2" :xs="{span: 24, offset: 0}" class="hidden-xs-only">
-      <el-card class="box-card box-card1" @click.native="overTab">全部资源</el-card>
+      <el-card class="box-card2 box-card1" @click.native="overTab">全部资源</el-card>
       <el-card
-        class="box-card "
+        class="box-card2"
         v-for="(item, index) in dList"
         :key="index"
         @click.native="tabType(item)"
@@ -62,7 +72,7 @@
 <script>
 import { formatDate } from "common/utils";
 import Elpagination from "components/common/element/Elpagination";
-import { teachDataList, teachDataType, dataByRtId } from "network/teachData";
+import { teachDataList, teachDataType, dataByRtId, } from "network/teachData";
 import { PageInfo } from "common/utils";
 
 export default {
@@ -108,8 +118,8 @@ export default {
       this.currentPage = value;
       this.teachDataList(this.currentPage, this.pageSize);
     },
-    detail(index,row) {
-      this.vData[index].viewNum = this.vData[index].viewNum+1
+    detail(index, row) {
+      this.vData[index].viewNum = this.vData[index].viewNum + 1;
       this.centerDialogVisible = true;
       this.resContent = row.resContent;
     },
@@ -117,9 +127,7 @@ export default {
       this.$message({ type: "warning", message: "暂不支持pdf、图片下载" });
       let url = row.resUrl;
       window.open(url);
-      // dataDownLoad(row.resUrl).then(res => {
-      //   console.log(res)
-      // });
+      // dataDownLoad(row.resUrl)
     },
     tabType(item) {
       dataByRtId(item.rtId).then(res => {
@@ -166,14 +174,14 @@ export default {
   margin-right: 2em;
 }
 
-.box-card {
+.box-card2 {
   text-align: center;
   font-size: 14px;
   color: rgb(102, 102, 102);
   cursor: pointer;
 }
 
-.box-card:hover {
+.box-card2:hover {
   color: rgb(64, 158, 255);
   box-shadow: 0px 0px 10px rgb(64, 158, 255);
 }
@@ -187,5 +195,17 @@ export default {
 .page {
   margin: 20px 0 10px;
   text-align: center;
+}
+/* .box-cards {
+  width: 85%;
+  margin: 20px auto;
+}
+@media (max-width: 767px) {
+  .box-cards {
+    width: 100%;
+  }
+} */
+.tab {
+  margin: 20px 0;
 }
 </style>

@@ -34,10 +34,10 @@
                 <p>{{item.content}}</p>
                 <p>{{item.vcContent}}</p>
                 <!-- <p v-if="this.$route.path == '/teachVideo/'">{{item.content}}</p> -->
-                <p>
+                <!-- <p>
                   {{item.createtime | showDate}}
                   <span @click="openInput">回复</span>
-                </p>
+                </p> -->
                 <!-- 一级评论结束点 -->
               </div>
 

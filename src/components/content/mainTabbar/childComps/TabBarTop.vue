@@ -25,7 +25,7 @@
     <video-tab v-else />
     <!-- <img src="~assets/img/common/top.jpg" alt class="top-img" v-if="this.path === '/home'" /> -->
 
-    <elrotation :rotation="rotation" v-if="this.path === '/home'"/>
+    <elrotation :rotation="rotation" v-if="this.path === '/home'" />
   </div>
 </template>
 
@@ -46,7 +46,7 @@ export default {
         require("assets/img/common/top.jpg"),
         require("assets/img/common/top2.jpg"),
         require("assets/img/common/top3.jpg"),
-        require("assets/img/common/top4.jpg"),
+        require("assets/img/common/top4.jpg")
       ]
     };
   },
@@ -96,5 +96,4 @@ export default {
     display: block;
   }
 }
-
 </style>
