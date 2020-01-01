@@ -1,16 +1,11 @@
 <template>
-<<<<<<< HEAD
   <div class="item">
     <!--                  评价item-->
     <el-row :gutter="20" class="commentItem" v-cloak>
       <!--                          左边头像-->
       <el-col :span="3" :xs="{span: 0}">
         <div class="grid-content bg-purple iocn">
-          <el-image
-            class="iocnImg"
-            style="width: 70px; height: 70px"
-            :src="comment.user.userIcon"
-          ></el-image>
+          <el-image class="iocnImg" style="width: 70px; height: 70px" :src="comment.user.userIcon"></el-image>
         </div>
       </el-col>
       <!--                          中间内容-->
@@ -42,45 +37,6 @@
       </el-col>
     </el-row>
   </div>
-=======
-    <div class="item">
-        <!--                  评价item-->
-        <el-row :gutter="20"  class="commentItem"  v-cloak>
-            <!--                          左边头像-->
-            <el-col :span="3">
-                <div class="grid-content bg-purple iocn">
-                    <el-image class="iocnImg"
-                              style="width: 70px; height: 70px"
-                              :src="comment.user.userIcon"
-                    ></el-image>
-                </div>
-            </el-col>
-            <!--                          中间内容-->
-            <el-col :span="17"><div class="grid-content bg-purple">
-                <div class="main">
-                    <h4 >{{comment.user.userNickname}}</h4>
-                    <p class="commen">{{comment.userContent}}</p>
-                    <!--                              老师回复-->
-                    <div class="huifu" v-if="comment.adminContent!=null">
-                        <h4>老师回复:</h4>
-                        <p>{{comment.adminContent}}</p>
-                    </div>
-                </div>
-            </div></el-col>
-            <!--                          右边时间-->
-            <el-col :span="4">
-                <div class="grid-content bg-purple" style="padding-top: 15px;">
-                    <elrate style="margin-bottom: 15px"
-                            :disabled="gradeDisabled"
-                            :value="comment.grade"
-                    />
-                    <p>{{comment.updatatime|showDate}}</p>
-                    <i v-if="showdelete" class="el-icon-delete" style="margin-top: 10px;font-size: 20px" @click="todel(comment.ccId)"></i>
-                </div>
-            </el-col>
-        </el-row>
-    </div>
->>>>>>> 9450e8852daae54e06d235eb3f4da3ff5386a503
 </template>
 
 <script>
