@@ -6,7 +6,8 @@ const user = {
         userNickname:null,
         userIcon:null,
         userNumber:null,
-        mail:null
+        mail:null,
+        roleId:null
     },
     mutations: {
         //将id保存到sessionStorage里，id表示登陆状态
@@ -23,7 +24,7 @@ const user = {
             state.userIcon = data.userIcon
             state.userNumber = data.userNumber
             state.mail = data.mail
-
+            state.roleId = data.roleId
         },
         SET_USERICON: (state, data) => {
             //修改用户头像

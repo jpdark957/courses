@@ -9,6 +9,12 @@ const TeachData = () => import('@/views/teachData/TeachData')
 const discussion = () => import('@/views/courseDiscussion/discussion')
 const discussionDetail = () => import('@/views/courseDiscussion/childComps/discussionDetail')
 const Me = () => import('@/views/me/Me')
+const Test = () => import('@/views/test/test')
+const Test1 = () => import('@/views/test/test1')
+const Chat = () => import('@/views/chat/Chat')
+const ChatUser = () => import('@/views/chat/ChatUser')
+const User = () => import('@/views/user/User')
+
 //安装插件
 Vue.use(VueRouter)
 
@@ -36,6 +42,18 @@ const routes = [
   {
     path: '/me',
     component: Me
+  } ,
+  {
+    path: '/test',
+    component: Test
+  },
+  {
+    path: '/test1',
+    component: Test1
+  },
+  {
+    path: '/chat',
+    component: Chat
   }
   ,
   {
@@ -51,6 +69,14 @@ const routes = [
     path: '/discussion/:id',
     name: 'discussionDetail',
     component: discussionDetail,
+  },
+  {
+    path: '/chatuser',
+    component: ChatUser
+  },
+  {
+    path: '/user/:userId',
+    component: User
   },
 ]
 
