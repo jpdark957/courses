@@ -10,18 +10,19 @@
     >
       <el-card>
         <el-col :span="24" class="head">
-          <h1>{{discussion.title}}</h1>
+          <h1>{{content.title}}</h1>
           <p>
             <span>
-              <i class="el-icon-user-solid"></i>作者:{{discussion.user.userNickname}}
+              <i class="el-icon-user-solid"></i>
+              作者:{{content.user.userNickname}}
             </span>
             <span>
               <i class="el-icon-time"></i>
-              发布时间：{{discussion.createtime | showDate}}
+              发布时间：{{content.createtime | showDate}}
             </span>
           </p>
         </el-col>
-        <el-col :span="24" class="con" v-html="discussion.description">{{discussion.description}}</el-col>
+        <el-col :span="24" class="con" v-html="content.description">{{content.description}}</el-col>
       </el-card>
       <comment1
         :commentData="commentData"
@@ -73,8 +74,8 @@ export default {
     this.qId = this.$route.params.id;
     this.discussion = this.$route.query.discussion;
     this.currentPage = this.$route.query.currentPage;
-    this.discussionDetail(this.qId);
-    this.discussionList(this.currentPage, this.pageSize);
+    // this.discussionDetail(this.qId);
+    // this.discussionList(this.currentPage, this.pageSize);
   },
   mounted() {
     this.discussionDetail(this.qId);

@@ -41,7 +41,6 @@ export default {
   },
   mounted(){
     gettotal().then(res=>{
-      console.log(res)
       this.totalcount="网站总访问量:"+res.data
       this.firstCon.push(this.totalcount)
     })

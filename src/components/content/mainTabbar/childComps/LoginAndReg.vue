@@ -313,7 +313,6 @@ export default {
       );
     },
     setDialogWidth() {
-      console.log(document.body.clientWidth);
       var val = document.body.clientWidth;
       const def = 800; // 默认宽度
       if (val < def) {
