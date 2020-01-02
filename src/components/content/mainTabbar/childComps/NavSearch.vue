@@ -12,13 +12,34 @@ export default {
   name: "NavSearch",
   data() {
     return {
-      inputValue: ""
+      inputValue: "",
+      currentPage: 1,
+      pageSize: 12
     };
   },
   computed: {},
   methods: {
     searchClick() {
-      console.log(this.inputValue);
+      if (this.$route.path != "/teachVideo") {
+        console.log("当前不在视频页面");
+        let inputValue = this.inputValue;
+        this.$router.push({
+          path: "/teachVideo",
+          query: {
+            inputValue
+          }
+        });
+        this.inputValue = "";
+      } else {
+        console.log("当前在视频页面");
+        let inputValue = this.inputValue;
+        this.$router.push({
+          path: "/teachVideo",
+          query: {
+            inputValue
+          }
+        });
+      }
       this.inputValue = "";
     }
   }
@@ -42,14 +63,12 @@ input[type="text"] {
   padding-left: 20px;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
-
 }
 
 button {
   width: 13%;
   /* background-color: #fff; */
   background-color: #f0f0f0;
-
 
   border-left: 1px solid #b0b0b0;
   border-top-right-radius: 15px;
@@ -61,6 +80,4 @@ button img {
   margin-top: 2px;
   cursor: pointer;
 }
-
-
 </style>

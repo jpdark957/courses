@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 //创建Store对象
 const state= {
-    id:1
+    id:1,
 }
 
 const store = new Vuex.Store ({

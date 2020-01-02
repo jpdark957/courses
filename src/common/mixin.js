@@ -106,7 +106,12 @@ export const TabRoute = {
           liCon: "教学反馈",
           icon: "el-icon-chat-line-square",
           liPath: "/comment"
-        }
+        },
+        {
+          liCon: "关于",
+          icon: "el-icon-guide",
+          liPath: "/about"
+        },
       ]
     }
   },

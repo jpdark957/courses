@@ -14,6 +14,7 @@ const Test1 = () => import('@/views/test/test1')
 const Chat = () => import('@/views/chat/Chat')
 const ChatUser = () => import('@/views/chat/ChatUser')
 const User = () => import('@/views/user/User')
+const About = () => import('@/views/about/About')
 
 //安装插件
 Vue.use(VueRouter)
@@ -77,6 +78,10 @@ const routes = [
   {
     path: '/user/:userId',
     component: User
+  },
+  {
+    path: '/about',
+    component: About
   },
 ]
 

@@ -6,6 +6,11 @@
         <el-breadcrumb-item>教学视频</el-breadcrumb-item>
       </el-breadcrumb>
     </el-card>
+    <el-col
+      v-show="this.$route.query.inputValue != undefined"
+      :span="18"
+      :offset="3"
+    >以下是你输入'{{this.$route.query.inputValue}}'查询到的视频</el-col>
     <el-row>
       <el-col :span="18" :offset="3" :xs="{span: 24, offset: 0}">
         <el-col :xs="{span: 12 , offset: 6}" class="eltab">
@@ -41,7 +46,7 @@
         </el-col>
       </el-row>
       <div class="page">
-        <elpagination @currentChange="currentChange" :PageInfo="PageInfo" />
+        <elpagination @currentChange="currentChange" :PageInfo="PageInfo[0]" />
       </div>
     </div>
     <div v-else>
@@ -53,8 +58,8 @@
           class="vContent"
           v-for="(item, index) in vData1"
           :xs="{span: 24,offset: 0}"
-          :sm="{span: 8,offset: 1}"
-          :md="{span: 8, offset: 1}"
+          :sm="{span: 8,offset: 0}"
+          :md="{span: 8, offset: 0}"
           :lg="{span: 5,offset: 1}"
         >
           <div class="vImg" @click="itemClick(index)">
@@ -72,7 +77,7 @@
         </el-col>
       </el-row>
       <div class="page">
-        <elpagination @currentChange="currentChange" :PageInfo="PageInfo" />
+        <elpagination @currentChange="currentChange" :PageInfo="PageInfo[1]" />
       </div>
     </div>
   </div>
@@ -82,9 +87,13 @@
 import Eltabs from "components/common/element/Eltabs"; //tab栏插件
 import Elpagination from "components/common/element/Elpagination";
 import { PageInfo } from "common/utils";
-import { sortByKey } from "common/computed";
 import { inDetail } from "common/mixin";
-import { videoList } from "network/video";
+import {
+  videoList,
+  videoListByNum,
+  videoSeachList,
+  videoSeachListByNum
+} from "network/video";
 export default {
   name: "videoMain",
   data() {
@@ -97,16 +106,51 @@ export default {
       pageSize2: 12,
       PageInfo,
       vData: [],
-      vData1: []
+      vData1: [],
+      inputValue: ""
     };
   },
   components: {
     Eltabs,
     Elpagination
   },
+  created() {
+    if (this.$route.query.inputValue != undefined) {
+      if (this.$route.query.inputValue.length != 0) {
+        this.videoSeachList(
+          this.currentPage,
+          this.pageSize,
+          this.$route.query.inputValue
+        );
+        this.videoSeachListByNum(
+          this.currentPage2,
+          this.pageSize,
+          this.$route.query.inputValue
+        );
+      }
+    } else {
+      this.videoList(this.currentPage, this.pageSize);
+      this.videoListByNum(this.currentPage2, this.pageSize2);
+    }
+  },
   mounted() {
-    this.videoList(this.currentPage, this.pageSize);
-    this.videoList2(this.currentPage2, this.pageSize2);
+    if (this.$route.query.inputValue != undefined) {
+      if (this.$route.query.inputValue.length != 0) {
+        this.videoSeachList(
+          this.currentPage,
+          this.pageSize,
+          this.$route.query.inputValue
+        );
+        this.videoSeachListByNum(
+          this.currentPage2,
+          this.pageSize,
+          this.$route.query.inputValue
+        );
+      }
+    } else {
+      this.videoList(this.currentPage, this.pageSize);
+      this.videoListByNum(this.currentPage2, this.pageSize2);
+    }
   },
   methods: {
     handleClick(tab) {
@@ -120,33 +164,100 @@ export default {
         let currentPage = this.currentPage;
         let pageSize = res.data.size;
         let total = res.data.totalElements;
-        this.PageInfo = new PageInfo(currentPage, pageSize, total);
+        this.PageInfo[0] = new PageInfo(currentPage, pageSize, total);
         this.vData = res.data.content;
       });
     },
-    videoList2(currentPage, pageSize) {
-      videoList(currentPage, pageSize).then(res => {
+    videoListByNum(currentPage, pageSize) {
+      videoListByNum(currentPage, pageSize).then(res => {
         let currentPage2 = this.currentPage2;
         let pageSize = res.data.size;
         let total = res.data.totalElements;
-        this.PageInfo = new PageInfo(currentPage2, pageSize, total);
-        sortByKey(res.data.content, "viewNum");
+        this.PageInfo[1] = new PageInfo(currentPage2, pageSize, total);
         this.vData1 = res.data.content;
       });
     },
-
+    videoSeachList(currentPage, pageSize, title) {
+      videoSeachList(currentPage, pageSize, title).then(res => {
+        let currentPage = this.currentPage;
+        let pageSize = res.data.size;
+        let total = res.data.totalElements;
+        this.PageInfo[0] = new PageInfo(currentPage, pageSize, total);
+        this.vData = res.data.content;
+      });
+    },
+    videoSeachListByNum(currentPage, pageSize, title) {
+      videoSeachListByNum(currentPage, pageSize, title).then(res => {
+        let currentPage2 = this.currentPage2;
+        let pageSize = res.data.size;
+        let total = res.data.totalElements;
+        this.PageInfo[1] = new PageInfo(currentPage2, pageSize, total);
+        this.vData1 = res.data.content;
+      });
+    },
     currentChange(value) {
-      if (this.sActive == 0) {
-        this.currentPage = value;
-        this.videoList(this.currentPage, this.pageSize);
+      if (this.$route.query.inputValue != undefined) {
+        if (this.$route.query.inputValue.length != 0) {
+          if (this.sActive == 0) {
+            this.currentPage = value;
+            this.videoSeachList(
+              this.currentPage,
+              this.pageSize,
+              this.$route.query.inputValue
+            );
+          } else {
+            this.currentPage2 = value;
+            this.videoSeachListByNum(
+              this.currentPage2,
+              this.pageSize,
+              this.$route.query.inputValue
+            );
+          }
+        } else {
+          if (this.sActive == 0) {
+            this.currentPage = value;
+            this.videoList(
+              this.currentPage,
+              this.pageSize,
+              this.$route.query.inputValue
+            );
+          } else {
+            this.currentPage2 = value;
+            this.videoListByNum(
+              this.currentPage2,
+              this.pageSize2,
+              this.$route.query.inputValue
+            );
+          }
+        }
       } else {
-        this.currentPage2 = value;
-        this.videoList2(this.currentPage2, this.pageSize2);
+        if (this.sActive == 0) {
+          this.currentPage = value;
+          this.videoList(this.currentPage, this.pageSize);
+        } else {
+          this.currentPage2 = value;
+          this.videoListByNum(this.currentPage2, this.pageSize2);
+        }
       }
     }
   },
   mixins: [inDetail], //详情页混动
-  watch: {}
+  updated() {
+    if (this.$route.query.inputValue != undefined) {
+      if (this.$route.query.inputValue.length != 0) {
+        this.videoSeachList(
+          this.currentPage,
+          this.pageSize,
+          this.$route.query.inputValue
+        );
+        this.videoSeachListByNum(
+          this.currentPage2,
+          this.pageSize,
+          this.$route.query.inputValue
+        );
+      }
+    }
+  }
 };
 </script>
 

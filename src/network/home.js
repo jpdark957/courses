@@ -15,3 +15,8 @@ export function gettoday() {
     url: '/home/cout'
   })
 }
+export function Abouts() {
+  return request({
+    url: '/home/herf'
+  })
+}

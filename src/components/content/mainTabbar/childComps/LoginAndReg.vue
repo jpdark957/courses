@@ -200,11 +200,11 @@ export default {
           { min: 6, max: 16, message: "长度在 6 到 16 个字符", trigger: "blur" }
         ],
         userNumber: [
-          { required: true, message: "请输入账号", trigger: "blur" },
+          { required: true, message: "请输入学号", trigger: "blur" },
           { min: 6, max: 16, message: "长度在 6 到 16 个字符", trigger: "blur" }
         ],
         userNickname: [
-          { required: true, message: "请输入账号", trigger: "blur" },
+          { required: true, message: "请输入昵称", trigger: "blur" },
           { min: 1, max: 6, message: "长度在 1 到 6 个字符", trigger: "blur" }
         ],
         mail: [
